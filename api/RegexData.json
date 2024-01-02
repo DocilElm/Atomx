@@ -1,0 +1,40 @@
+{
+    "Dungeons": {
+        "Floor": {
+            "pattern": "^ +⏣ The Catacombs \\(([\\w\\d].{1,2})\\)$",
+            "flags": "" 
+        },
+        "RoomID": {
+            "pattern": "^\\d[\\d\\/]+ [\\w\\d]+ ([-\\d,]+)$",
+            "flags": ""
+        },
+        "PlayerInformation": {
+            "pattern": "^\\[[\\d]+\\] ([A-z]+)(?:.+?)? \\(([\\w]+) ([IVXLCDM]+)\\)$",
+            "flags": ""
+        },
+        "SecretsFound": {
+            "pattern": "^ Secrets Found: ([\\d,.]+)\\%$",
+            "flags": ""
+        },
+        "Milestone": {
+            "pattern": "^ Your Milestone: ☠(.+)$",
+            "flags": ""
+        },
+        "CompletedRooms": {
+            "pattern": "^ Completed Rooms: ([\\d]+)$",
+            "flags": ""
+        },
+        "TeamDeaths": {
+            "pattern": "^ Team Deaths: ([\\d]+)$",
+            "flags": ""
+        },
+        "PuzzlesAmount": {
+            "pattern": "^Puzzles: \\(([\\d]+)\\)$",
+            "flags": ""
+        },
+        "CryptsAmount": {
+            "pattern": "^ Crypts: ([\\d]+)$",
+            "flags": ""
+        }
+    }
+}
