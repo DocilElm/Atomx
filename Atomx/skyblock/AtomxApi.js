@@ -6,11 +6,14 @@ export default new class AtomxApi {
     static AtomxPrefix = `&c[&4Atomx&c]&r`
 
     constructor() {
-        this.apiMetadata = Persistence.getDataFromFile("Atomx", "AtomxApi.json")?.MetaData ?? Persistence.getDataFromURL("https://raw.githubusercontent.com/DocilElm/Atomx/main/api/metadata.json")
-        this.RegexData = Persistence.getDataFromFile("Atomx", "AtomxApi.json")?.RegexData ?? Persistence.getDataFromURL("https://raw.githubusercontent.com/DocilElm/Atomx/main/api/RegexData.json")
-        this.BossEntryMessage = null
-        this.GardenItemID = null
-        this.GardenRareItems = null
+        this.api = Persistence.getDataFromFile("Atomx", "AtomxApi.json") ?? Persistence.getDataFromURL("https://raw.githubusercontent.com/DocilElm/Atomx/main/api/api.json")
+        this.RegexData = this.api.RegexData
+        this.BossEntryMessage = this.api.BossEntryMessage
+        this.GardenItemID = this.api.GardenItemID
+        this.GardenRareItems = this.api.GardenRareItems
+        this.TrophyFishColors = this.api.TriphyFishColors
+
+        this.eventHandler = new Set()
 
         this._checkVersion()
         this._saveData()
@@ -20,34 +23,67 @@ export default new class AtomxApi {
         register("step", this._checkVersion.bind(this)).setDelay(300)
     }
 
+    /**
+     * - Runs the given function whenever the AtomxApi gets updated
+     * 
+     * @param {Function} fn 
+     * @returns this for method chaining
+     */
+    onApiUpdate(fn) {
+        this.eventHandler.add(fn)
+        
+        return this
+    }
+
     _refresh() {
-        this.apiMetadata = Persistence.getDataFromURL("https://raw.githubusercontent.com/DocilElm/Atomx/main/api/metadata.json")
-        this.RegexData = Persistence.getDataFromURL("https://raw.githubusercontent.com/DocilElm/Atomx/main/api/RegexData.json")
-        this.BossEntryMessage = null
-        this.GardenItemID = null
-        this.GardenRareItems = null
+        this.api = Persistence.getDataFromURL("https://raw.githubusercontent.com/DocilElm/Atomx/main/api/api.json")
+        this.RegexData = this.api.RegexData
+        this.BossEntryMessage = this.api.BossEntryMessage
+        this.GardenItemID = this.api.GardenItemID
+        this.GardenRareItems = this.api.GardenRareItems
+        this.TrophyFishColors = this.api.TriphyFishColors
+
+        this.eventHandler.forEach(fn => fn())
 
         this._saveData()
+
+        ChatLib.chat(ChatLib.getChatBreak("&c-"))
+        ChatLib.chat(`${AtomxApi.AtomxPrefix} &aNew api version found updating variables!`)
+        ChatLib.chat(`${AtomxApi.AtomxPrefix} &aChangelogs&f:`)
+        this.api.changelog?.forEach(log => ChatLib.chat(`${AtomxApi.AtomxPrefix} &a> &6${log}`))
+        ChatLib.chat(ChatLib.getChatBreak("&c-"))
     }
 
     _saveData() {
-        let data = {
-            MetaData: this.apiMetadata,
-            RegexData: this.RegexData,
-            BossEntryMessage: this.BossEntryMessage,
-            GardenItemID: this.GardenItemID,
-            GardenRareItems: this.GardenRareItems
-        }
-        Persistence.saveDataToFile("Atomx", "AtomxApi.json", data, true)
+        Persistence.saveDataToFile("Atomx", "AtomxApi.json", this.api, true)
     }
 
     _checkVersion() {
-        const repoVersion = Persistence.getDataFromURL("https://raw.githubusercontent.com/DocilElm/Atomx/main/api/metadata.json").apiVersion
-        const localVersion = this.apiMetadata.apiVersion
+        const repoVersion = Persistence.getDataFromURL("https://raw.githubusercontent.com/DocilElm/Atomx/main/api/api.json").apiVersion
+        const localVersion = this.api.apiVersion
 
         if (repoVersion === localVersion) return
 
-        ChatLib.chat(`${AtomxApi.AtomxPrefix} &aNew api version found updating variables!`)
         this._refresh()
+    }
+
+    getRegexData() {
+        return this.RegexData
+    }
+
+    getBossEntryMessage() {
+        return this.BossEntryMessage
+    }
+
+    getGardenItemID() {
+        return this.GardenItemID
+    }
+
+    getGardenRareItems() {
+        return this.GardenRareItems
+    }
+
+    getTrophyFishColors() {
+        return this.TrophyFishColors
     }
 }
