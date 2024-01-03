@@ -1,5 +1,7 @@
 import AtomxApi from "./AtomxApi"
+import { DateHelper } from "./Date"
 import { NumberHelper } from "./Number"
+import { Persistence } from "./Persistence"
 import { onBlessingsChange, onScoreboardPacket, onTabUpdatePacket } from "./Register"
 import { TextHelper } from "./Text"
 import { WorldState } from "./World"
@@ -10,8 +12,11 @@ export default new class Dungeons {
         this.lastClass = null
         this.lastClassLevel = null
 
+        // Init methods
         this._reloadRegex()
-        this.reset()
+        this._reset()
+        this._makeData()
+        this._saveData()
 
         // Reload regex if the api was changed
         AtomxApi.onApiUpdate(this._reloadRegex.bind(this))
@@ -62,8 +67,6 @@ export default new class Dungeons {
     }
 
     _reloadRegex() {
-        ChatLib.chat("reloading regex")
-
         const regexData = AtomxApi.getRegexData()?.Dungeons
         if (!regexData) return
 
@@ -78,14 +81,13 @@ export default new class Dungeons {
         this.cryptsAmountRegex = TextHelper.getRegexFromString(regexData.CryptsAmount.pattern, regexData.CryptsAmount.flags)
     }
 
-    reset() {
+    _reset() {
         // Player stuff
         this.currentFloor = null
         this.currentMilestone = null
 
         // Room stuff
         this.currentRoomID = null
-        this.currentRoomName = null
 
         // Classes stuff
         this.currentClass = null
@@ -99,6 +101,38 @@ export default new class Dungeons {
         this.cryptsAmount = 0
         this.blessings = []
         this.teamMembers = {}
+
+        // Loading dungeons data
+        this.DataFile = Persistence.getDataFromFile("Atomx", "DungeonsData.json")
+        this.DungeonsData = this.DataFile?.DungeonsData ?? Persistence.getDataFromURL("https://soopy.dev/api/bettermap/roomdata")
+        this.savedDate = this.DataFile?.lastSave
+        /**
+         * - This is a [Map] that stores all of the room data not the
+         * current dungeon's map but the whole dungeons data
+         */
+        this.DungeonsMapData = new Map()
+    }
+
+    _makeData() {
+        // Make all of the dungeon data gathered from soopy's api into
+        /*
+        MapObject: {
+            RoomID: <Data Object>
+        }
+        */
+        this.DungeonsData.forEach(obj => {
+            obj.id.forEach(roomID => this.DungeonsMapData.set(roomID, obj))
+        })
+
+    }
+
+    _saveData() {
+        if (this.savedDate && (DateHelper.getMsSinceNow(this.savedDate) >= 86400000)) this.DungeonsData = Persistence.getDataFromURL("https://soopy.dev/api/bettermap/roomdata")
+
+        Persistence.saveDataToFile("Atomx", "DungeonsData.json", {
+            DungeonsData: this.DungeonsData,
+            lastSave: Date.now()
+        }, true)
     }
     
     getCurrentFloor() {
@@ -118,7 +152,16 @@ export default new class Dungeons {
     }
 
     getCurrentRoomName() {
-        return this.currentRoomName
+        return this.DungeonsMapData?.get(this.currentRoomID)?.name
+    }
+
+    /**
+     * - Gets the current room's object data
+     * - e.g { id: ["282,66", "102,66"], name: "Spawn", ...etc }
+     * @returns {Object}
+     */
+    getCurrentRoom() {
+        return this.DungeonsMapData?.get(this.currentRoomID)
     }
 
     /**

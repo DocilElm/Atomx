@@ -8,7 +8,7 @@ export class Persistence {
     static getDataFromURL(url, defaultValue = {}) {
         if (!url) throw new Error(`(${url}) is not a valid URL`)
 
-        return JSON.parse(FileLib.getUrlContent(url) ?? defaultValue)   
+        return JSON.parse(FileLib.getUrlContent(url)) ?? defaultValue
     }
 
     /**
