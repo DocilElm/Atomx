@@ -1,0 +1,167 @@
+{
+    "apiVersion": "0.1.1",
+    "changelog": ["Merge everything to api.json"],
+    "BossEntryMessage": [
+        "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
+        "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
+        "[BOSS] The Professor: I was burdened with terrible news recently...",
+        "[BOSS] Thorn: Welcome Adventurers! I am Thorn, the Spirit! And host of the Vegan Trials!",
+        "[BOSS] Livid: Welcome, you've arrived right on time. I am Livid, the Master of Shadows.",
+        "[BOSS] Sadan: So you made it all the way here... Now you wish to defy me? Sadan?!",
+        "[BOSS] Maxor: WELL! WELL! WELL! LOOK WHO'S HERE!"
+    ],
+    "GardenItemID": {
+        "MUTANT_NETHER_WART": "MUTANT_NETHER_STALK",
+        "ENCHANTED_HAY_BALE": "ENCHANTED_HAY_BLOCK",
+        "ENCHANTED_RED_MUSHROOM_BLOCK": "ENCHANTED_HUGE_MUSHROOM_2",
+        "ENCHANTED_CARROT": "ENCHANTED_CARROT",
+        "ENCHANTED_GOLDEN_CARROT": "ENCHANTED_GOLDEN_CARROT",
+        "ENCHANTED_POTATO": "ENCHANTED_POTATO",
+        "ENCHANTED_BAKED_POTATO": "ENCHANTED_BAKED_POTATO",
+        "ENCHANTED_PUMPKIN": "ENCHANTED_PUMPKIN",
+        "POLISHED_PUMPKIN": "POLISHED_PUMPKIN",
+        "ENCHANTED_MELON": "ENCHANTED_MELON",
+        "ENCHANTED_MELON_BLOCK": "ENCHANTED_MELON_BLOCK",
+        "ENCHANTED_RED_MUSHROOM": "ENCHANTED_RED_MUSHROOM",
+        "ENCHANTED_BROWN_MUSHROOM": "ENCHANTED_BROWN_MUSHROOM",
+        "ENCHANTED_BROWN_MUSHROOM_BLOCK": "ENCHANTED_HUGE_MUSHROOM_1",
+        "ENCHANTED_COCOA_BEAN": "ENCHANTED_COCOA",
+        "ENCHANTED_COOKIE": "ENCHANTED_COOKIE",
+        "ENCHANTED_CACTUS_GREEN": "ENCHANTED_CACTUS_GREEN",
+        "ENCHANTED_CACTUS": "ENCHANTED_CACTUS",
+        "ENCHANTED_SUGAR": "ENCHANTED_SUGAR",
+        "ENCHANTED_SUGAR_CANE": "ENCHANTED_SUGAR_CANE",
+        "ENCHANTED_RAW_BEEF": "ENCHANTED_RAW_BEEF",
+        "ENCHANTED_PORK": "ENCHANTED_PORK",
+        "ENCHANTED_GRILLED_PORK": "ENCHANTED_GRILLED_PORK",
+        "ENCHANTED_RAW_CHICKEN": "ENCHANTED_RAW_CHICKEN",
+        "ENCHANTED_MUTTON": "ENCHANTED_MUTTON",
+        "ENCHANTED_COOKED_MUTTON": "ENCHANTED_COOKED_MUTTON",
+        "ENCHANTED_NETHER_WART": "ENCHANTED_NETHER_STALK",
+        "COMPOST": "COMPOST",
+        "ENCHANTED_RAW_RABBIT": "ENCHANTED_RABBIT"
+    },
+    "GardenRareItems": {
+        "Flowering Bouquet": "FLOWERING_BOUQUET",
+        "Overgrown Grass": "OVERGROWN_GRASS",
+        "Green Bandana": "GREEN_BANDANA",
+        "Dedication IV": "ENCHANTMENT_DEDICATION_4",
+        "Dedication 4": "ENCHANTMENT_DEDICATION_4",
+        "Music Rune 1": "MUSIC_RUNE;1",
+        "Music Rune I": "MUSIC_RUNE;1",
+        "Space Helmet": "DCTR_SPACE_HELM",
+        "Cultivating I": "ENCHANTMENT_CULTIVATING_1",
+        "Cultivating 1": "ENCHANTMENT_CULTIVATING_1",
+        "Replenish I": "ENCHANTMENT_REPLENISH_1",
+        "Replenish 1": "ENCHANTMENT_REPLENISH_1",
+        "Jungle Key": "JUNGLE_KEY"
+    },
+    "TriphyFishColors": {
+        "Sulphur Skitter": "&f",
+        "Obfuscated 1": "&f",
+        "Steaming-Hot Flounder": "&f",
+        "Gusher": "&f",
+        "Blobfish": "&f",
+        "Obfuscated 2": "&a",
+        "Slugfish": "&a",
+        "Flyfish": "&a",
+        "Obfuscated 3": "&9",
+        "Lavahorse": "&9",
+        "Mana Ray": "&9",
+        "Volcanic Stonefish": "&9",
+        "Vanille": "&9",
+        "Skeleton Fish": "&5",
+        "Moldfin": "&5",
+        "Soul Fish": "&5",
+        "Karate Fish": "&5",
+        "Golden Fish": "&6"
+    },
+    "RegexData": {
+        "Dungeons": {
+            "Floor": {
+                "pattern": "^ +⏣ The Catacombs \\(([\\w\\d].{1,2})\\)$",
+                "flags": "" 
+            },
+            "RoomID": {
+                "pattern": "^\\d[\\d\\/]+ [\\w\\d]+ ([-\\d,]+)$",
+                "flags": ""
+            },
+            "PlayerInformation": {
+                "pattern": "^\\[[\\d]+\\] ([A-z]+)(?:.+?)? \\(([\\w]+) ([IVXLCDM]+)\\)$",
+                "flags": ""
+            },
+            "SecretsFound": {
+                "pattern": "^ Secrets Found: ([\\d,.]+)\\%$",
+                "flags": ""
+            },
+            "Milestone": {
+                "pattern": "^ Your Milestone: ☠(.+)$",
+                "flags": ""
+            },
+            "CompletedRooms": {
+                "pattern": "^ Completed Rooms: ([\\d]+)$",
+                "flags": ""
+            },
+            "TeamDeaths": {
+                "pattern": "^ Team Deaths: ([\\d]+)$",
+                "flags": ""
+            },
+            "PuzzlesAmount": {
+                "pattern": "^Puzzles: \\(([\\d]+)\\)$",
+                "flags": ""
+            },
+            "CryptsAmount": {
+                "pattern": "^ Crypts: ([\\d]+)$",
+                "flags": ""
+            }
+        },
+        "AccountStats": {
+            "ProfileName": {
+                "pattern": "^Profile\\: ([\\w ]+)$",
+                "flags": ""
+            },
+            "PlayerBank": {
+                "pattern": "^ Bank\\: ([\\w\\,.\/]+)",
+                "flags": ""
+            },
+            "Skills": {
+                "pattern": "^Skills\\: ([\\w\\d ]+)\\: ([\\w\\d,. ]+)\\%",
+                "flags": ""
+            },
+            "Stats": {
+                "pattern": "^ ([\\w ]+)\\: (❁|☣|☠|⚔|✦|☘)([\\d,]+)$",
+                "flags": ""
+            }
+        },
+        "Garden": {
+            "CropMilestone": {
+                "pattern": "^ Milestone\\: ([\\w\\d ]+)\\: ([\\d,.]+)%$",
+                "flags": ""
+            },
+            "JacobContest": {
+                "pattern": "^ Starts In\\: ([\\w\\d ]+)$",
+                "flags": ""
+            },
+            "NextVisitor": {
+                "pattern": "^Visitors\\: \\((.+)\\)$",
+                "flags": ""
+            },
+            "OrganicMatter": {
+                "pattern": "^ Organic Matter\\: ([\\w\\d,.]+)$",
+                "flags": ""
+            },
+            "Fuel": {
+                "pattern": "^ Fuel\\: ([\\w\\d,.]+)$",
+                "flags": ""
+            },
+            "TimeLeft": {
+                "pattern": "^ Time Left\\: ([\\w\\d ]+)$",
+                "flags": ""
+            },
+            "StoredCompost": {
+                "pattern": "^ Stored Compost\\: ([\\w\\d,. ]+)$",
+                "flags": ""
+            }
+        }
+    }
+}
