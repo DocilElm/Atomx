@@ -1,4 +1,5 @@
 import { Persistence } from "./Persistence"
+import { TextHelper } from "./Text"
 
 // This class loads the repo's api data for this library
 // regex, criterias etc
@@ -68,7 +69,23 @@ export default new class AtomxApi {
     }
 
     getRegexData() {
-        return this.RegexData
+        const obj = {}
+
+        // Makes the object values into actual regex values
+        // so that the user doesn't have to worry about them being
+        // a string since it's gathered from the api
+        Object.keys(this.RegexData).forEach(category => {
+            if (!(category in obj)) obj[category] = {}
+
+            Object.keys(this.RegexData[category]).forEach(key => {
+                const pattern = this.RegexData[category][key].pattern
+                const flags = this.RegexData[category][key].flags
+
+                obj[category][key] = TextHelper.getRegexFromString(pattern, flags)
+            })
+        })
+
+        return obj
     }
 
     getBossEntryMessage() {

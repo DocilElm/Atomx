@@ -66,21 +66,29 @@ export default new class Dungeons {
         })
     }
 
+    /**
+     * - Re-loads the required regex data from the api
+     * - Internal Use
+     */
     _reloadRegex() {
         const regexData = AtomxApi.getRegexData()?.Dungeons
         if (!regexData) return
 
-        this.currentFloorRegex = TextHelper.getRegexFromString(regexData.Floor.pattern, regexData.Floor.flags)
-        this.currentRoomIDRegex = TextHelper.getRegexFromString(regexData.RoomID.pattern, regexData.RoomID.flags)
-        this.playerInformationRegex = TextHelper.getRegexFromString(regexData.PlayerInformation.pattern, regexData.PlayerInformation.flags)
-        this.secretsFoundRegex = TextHelper.getRegexFromString(regexData.SecretsFound.pattern, regexData.SecretsFound.flags)
-        this.milestoneRegex = TextHelper.getRegexFromString(regexData.Milestone.pattern, regexData.Milestone.flags)
-        this.completedRoomsRegex = TextHelper.getRegexFromString(regexData.CompletedRooms.pattern, regexData.CompletedRooms.flags)
-        this.teamDeathRegex = TextHelper.getRegexFromString(regexData.TeamDeaths.pattern, regexData.flags)
-        this.puzzlesAmountRegex = TextHelper.getRegexFromString(regexData.PuzzlesAmount.pattern, regexData.PuzzlesAmount.flags)
-        this.cryptsAmountRegex = TextHelper.getRegexFromString(regexData.CryptsAmount.pattern, regexData.CryptsAmount.flags)
+        this.currentFloorRegex = regexData.Floor
+        this.currentRoomIDRegex = regexData.RoomID
+        this.playerInformationRegex = regexData.PlayerInformation
+        this.secretsFoundRegex = regexData.SecretsFound
+        this.milestoneRegex = regexData.Milestone
+        this.completedRoomsRegex = regexData.CompletedRooms
+        this.teamDeathRegex = regexData.TeamDeaths
+        this.puzzlesAmountRegex = regexData.PuzzlesAmount
+        this.cryptsAmountRegex = regexData.CryptsAmount
     }
 
+    /**
+     * - Resets all of the variables to a default state
+     * - Internal Use
+     */
     _reset() {
         // Player stuff
         this.currentFloor = null
