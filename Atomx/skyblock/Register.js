@@ -7,10 +7,12 @@ import { TextHelper } from "./Text"
 let scoreboardEvents = []
 let tablsitEvents = []
 let blessingEvents = []
+let chatPacketEvents = []
 
-export const onScoreboardPacket = (fn, criteria) => scoreboardEvents.push([fn, criteria])
-export const onTabUpdatePacket = (fn, criteria) => tablsitEvents.push([fn, criteria])
+export const onScoreboardPacket = (fn, criteria = null) => scoreboardEvents.push([fn, criteria])
+export const onTabUpdatePacket = (fn, criteria = null) => tablsitEvents.push([fn, criteria])
 export const onBlessingsChange = (fn) => blessingEvents.push(fn)
+export const onChatPacket = (fn, criteria = null) => chatPacketEvents.push([fn, criteria])
 
 register("packetReceived", (packet) => {
     const channel = packet.func_149307_h()
@@ -73,3 +75,17 @@ register("packetReceived", (packet, _) => {
     blessingEvents.forEach(fn => fn(blessingsArray))
     blessingsArray = null
 }).setFilteredClass(net.minecraft.network.play.server.S47PacketPlayerListHeaderFooter)
+
+register("packetReceived", (packet, event) => {
+    // Check if the packet is for the actionbar
+    if (packet.func_148916_d()) return
+
+    const chatComponent = packet.func_148915_c()        
+    const formatted = chatComponent?.func_150254_d()
+    const unformatted = formatted?.removeFormatting()
+
+    if (!unformatted) return
+    
+    // TextHelper.matchesCriteria(fn, criteria, unformatted, event, formatted)
+    chatPacketEvents.forEach(arr => TextHelper.matchesCriteria(arr[0], arr[1], unformatted, event, formatted))
+}).setFilteredClass(net.minecraft.network.play.server.S02PacketChat)
