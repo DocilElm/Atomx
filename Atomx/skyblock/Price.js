@@ -50,7 +50,7 @@ export default new class Price {
      */
     update() {
         // Wait every 20mins to update the api data
-        if (data.hypixelApiCheck && Date.now()-data.hypixelApiCheck <= (1000*60)*20) return
+        if (data.hypixelApiCheck && DateHelper.getMsSinceNow(data.hypixelApiCheck) <= (1000*60)*20) return
         
         Promise.all([
             request({url: "https://api.hypixel.net/skyblock/bazaar", headers: { 'User-Agent': ' Mozilla/5.0', 'Content-Type': 'application/json' }, json: true}),
