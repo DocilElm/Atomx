@@ -63,7 +63,6 @@ export default new class Party {
         this.playerJoined.forEach(reg => 
             onChatPacket(name => {
                 this.party.Members[name] = name
-                ChatLib.chat(`${name} joined the party!`)
             }, reg))
 
         this.playerLeft.forEach(reg => 

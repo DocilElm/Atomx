@@ -2,7 +2,7 @@
     "name": "Atomx",
     "creator": "DocilElm and Dalwyn",
     "description": "This is a library used by other modules",
-    "version": "0.10.0",
+    "version": "0.11.0",
     "requires": ["requestV2", "PromiseV2", "PogData"],
     "entry": "index.js"
 }

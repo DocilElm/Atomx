@@ -8,11 +8,17 @@ let scoreboardEvents = []
 let tablsitEvents = []
 let blessingEvents = []
 let chatPacketEvents = []
+let actionbarPacketEvent = []
+let openWindowPacketEvent = []
+let windowItemsPacketEvent = []
 
 export const onScoreboardPacket = (fn, criteria = null) => scoreboardEvents.push([fn, criteria])
 export const onTabUpdatePacket = (fn, criteria = null) => tablsitEvents.push([fn, criteria])
 export const onBlessingsChange = (fn) => blessingEvents.push(fn)
 export const onChatPacket = (fn, criteria = null) => chatPacketEvents.push([fn, criteria])
+export const onActionbarPacket = (fn, criteria = null) => actionbarPacketEvent.push([fn, criteria])
+export const onOpenWindowPacket = (fn) => openWindowPacketEvent.push(fn)
+export const onWindowItemsPacket = (fn) => windowItemsPacketEvent.push(fn)
 
 register("packetReceived", (packet) => {
     const channel = packet.func_149307_h()
@@ -89,3 +95,36 @@ register("packetReceived", (packet, event) => {
     // TextHelper.matchesCriteria(fn, criteria, unformatted, event, formatted)
     chatPacketEvents.forEach(arr => TextHelper.matchesCriteria(arr[0], arr[1], unformatted, event, formatted))
 }).setFilteredClass(net.minecraft.network.play.server.S02PacketChat)
+
+// i know i could've used the same as the register above for both of them instead of two
+// but im too lazy so yea
+register("packetReceived", (packet, event) => {
+    // Check if the packet is for the actionbar
+    if (!packet.func_148916_d()) return
+
+    const chatComponent = packet.func_148915_c()        
+    const formatted = chatComponent?.func_150254_d()
+    const unformatted = formatted?.removeFormatting()
+    
+    if (!unformatted) return
+    
+    // TextHelper.matchesCriteria(fn, criteria, unformatted, event, formatted)
+    actionbarPacketEvent.forEach(arr => TextHelper.matchesCriteria(arr[0], arr[1], unformatted, event, formatted))
+}).setFilteredClass(net.minecraft.network.play.server.S02PacketChat)
+
+register("packetReceived", (packet, _) => {
+    const windowTitle = packet.func_179840_c().func_150254_d().removeFormatting()
+    const windowID = packet.func_148901_c()
+    const hasSlots = packet.func_148900_g()
+    const slotCount = packet.func_148898_f()
+    const guiID = packet.func_148902_e()
+    const entityID = packet.func_148897_h()
+
+    // fn(windowTitle, windowID, hasSlots, slotCount, guiID, entityID)
+    openWindowPacketEvent.forEach(fn => fn(windowTitle, windowID, hasSlots, slotCount, guiID, entityID))
+}).setFilteredClass(net.minecraft.network.play.server.S2DPacketOpenWindow)
+
+register("packetReceived", (packet, _) => {
+    // fn(packet.func_148910_d())
+    windowItemsPacketEvent.forEach(fn => fn(packet.func_148910_d()))
+}).setFilteredClass(net.minecraft.network.play.server.S30PacketWindowItems)
