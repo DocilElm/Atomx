@@ -29,6 +29,15 @@ export class WorldState {
     }
 
     /**
+     * - Whether the given string is in Scoreboard's names or not
+     * @param {String} string 
+     * @returns {Boolean}
+     */
+    static inScoreboard(string) {
+        return this.getScoreboard().some(names => names.includes(string))
+    }
+
+    /**
      * - Whether the player is currently inside of dungeons or not
      * @returns {Boolean}
      */

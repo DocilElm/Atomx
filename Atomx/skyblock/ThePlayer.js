@@ -304,4 +304,12 @@ export default new class ThePlayer {
     getCurrentPet() {
         return this.currentPet
     }
+
+    /**
+     * - Whether the player is currently in skyblock or not
+     * @returns {Boolean}
+     */
+    inSkyblock() {
+        return /sk(y|i)block/.test(Scoreboard.getTitle()?.removeFormatting()?.toLowerCase())
+    }
 }
