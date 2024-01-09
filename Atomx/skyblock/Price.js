@@ -1,15 +1,7 @@
-import PogObject from "../../PogData"
 import { DateHelper } from "./Date"
 import Promise from "../../PromiseV2"
 import request from "../../requestV2"
 import { Persistence } from "./Persistence"
-
-// I decided to go with pogdata though we can just
-// change this into something else but for the sake of it being
-// faster this way i'll do it like this for now
-const data = new PogObject("Atomx", {
-    hypixelApiCheck: null
-}, "data/data.json")
 
 export default new class Price {
     constructor() {
@@ -17,11 +9,15 @@ export default new class Price {
         this.bazaarBuyApi = new Map()
         this.lowestBinApi = new Map()
 
+        this.cachedBzFile = Persistence.getDataFromFile("Atomx", "Bazaar.json")
+        // Load time since saved
+        this.lastSave = this.cachedBzFile?.lastSave
+
         // Updating the api data
         this.update()
 
         // Load all the data required
-        this.loadApiData()
+        if (this.lastSave) this.loadApiData()
 
         // Refresh values
         register("step", this.update.bind(this)).setFps(1)
@@ -32,7 +28,10 @@ export default new class Price {
      * - Into the map variables
      */
     loadApiData() {
-        const bzApi = Persistence.getDataFromFile("Atomx", "Bazaar.json")
+        const bzFile = Persistence.getDataFromFile("Atomx", "Bazaar.json")
+        this.lastSave = bzFile.lastSave
+
+        const bzApi = bzFile.bzPrices
         const lbApi = Persistence.getDataFromFile("Atomx", "LowestBin.json")
 
         Object.entries(bzApi).forEach(([key, value]) => {
@@ -50,7 +49,8 @@ export default new class Price {
      */
     update() {
         // Wait every 20mins to update the api data
-        if (data.hypixelApiCheck && DateHelper.getMsSinceNow(data.hypixelApiCheck) <= (1000*60)*20) return
+        if (this.lastSave && DateHelper.getMsSinceNow(this.lastSave) <= (1000*60)*20) return
+        this.lastSave = Date.now() // to avoid double trigger
         
         Promise.all([
             request({url: "https://api.hypixel.net/skyblock/bazaar", headers: { 'User-Agent': ' Mozilla/5.0', 'Content-Type': 'application/json' }, json: true}),
@@ -70,13 +70,13 @@ export default new class Price {
                 return previousValue
             }, {})
 
-            Persistence.saveDataToFile("Atomx", "Bazaar.json", bzPrices)
+            Persistence.saveDataToFile("Atomx", "Bazaar.json", {
+                bzPrices: bzPrices,
+                lastSave: Date.now()
+            })
             Persistence.saveDataToFile("Atomx", "LowestBin.json", response[1])
 
             this.loadApiData()
-
-            data.hypixelApiCheck = Date.now()
-            data.save()
         })
     }
 
