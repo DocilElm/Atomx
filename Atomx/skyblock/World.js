@@ -1,3 +1,7 @@
+/**
+ * - Class that handles current world utilities
+ * @class
+ */
 export class WorldState {
     /**
      * - Gets the Tablist's names and removes the formatting of them

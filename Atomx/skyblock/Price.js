@@ -1,9 +1,16 @@
-import { DateHelper } from "./Date"
 import Promise from "../../PromiseV2"
 import request from "../../requestV2"
-import { Persistence } from "./Persistence"
+import { DateHelper } from "../helper/Date"
+import { Persistence } from "../helper/Persistence"
 
+/** 
+ * - Class to handle all sorts of utilities for item's prices
+ * @class
+*/
 export default new class Price {
+    /**
+     * - Makes a new [Price] class
+     */
     constructor() {
         this.bazaarSellApi = new Map()
         this.bazaarBuyApi = new Map()

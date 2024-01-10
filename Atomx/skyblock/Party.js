@@ -8,7 +8,14 @@ const messagesToHide = [
 
 const removeRank = (name) => name.replace(/(\[[A-z]+\++\] )/, "")
 
+/**
+ * - Class to handle (almost) everything one could need from the user's party
+ * @class
+ */
 export default new class Party {
+    /**
+     * - Makes a new [Party] class
+     */
     constructor() {
         // These variables should not be reset
         this.commandSent = false
@@ -83,6 +90,9 @@ export default new class Party {
     }
 
     // maybe add this into the api instead of here
+    /**
+     * - Internal use
+     */
     _reloadRegex() {
         this.membersAmountRegex = /^Party Members \((\d+)\)$/
         this.partyMembersRegex = /^Party (Members|Moderators)\: (.+ ●) ?$/
@@ -115,6 +125,9 @@ export default new class Party {
         ]
     }
 
+    /**
+     * - Internal use
+     */
     _reset() {
         this.party = {
             "Members": {},

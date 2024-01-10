@@ -1,8 +1,8 @@
 // THIS IS TEMPORARY
 // therefor this code will look very ugly
 
-import { NumberHelper } from "./Number"
-import { TextHelper } from "./Text"
+import { NumberHelper } from "../helper/Number"
+import { TextHelper } from "../helper/Text"
 
 let scoreboardEvents = []
 let tablsitEvents = []

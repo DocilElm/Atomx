@@ -2,7 +2,15 @@ import { onActionbarPacket, onOpenWindowPacket, onScoreboardPacket, onWindowItem
 
 const removeCommas = (string) => parseFloat(string.replace(/,/g, ""))
 
+/**
+ * - Class that handles alot of utilities for the current player's data
+ * - Skill average, hp, mana, defense etc...
+ * @class
+ */
 export default new class ThePlayer {
+    /**
+     * - Creates a new [ThePlayer] class
+     */
     constructor() {
         // This variable should not reset
         this.inSbMenu = false
@@ -125,6 +133,9 @@ export default new class ThePlayer {
         })
     }
 
+    /**
+     * - Internal use
+     */
     _reloadRegex() {
         // Scoreboard
         this.purseRegex = /^Purse\: ([\d,.]+) ?(?:[\(\)\d\+,.]+)?$/
@@ -139,6 +150,9 @@ export default new class ThePlayer {
         this.overflowManaRegex = /(\d[\d,.]+)ʬ/
     }
     
+    /**
+     * - Internal use
+     */
     _reset() {
         this.purse = 0
         this.bits = 0

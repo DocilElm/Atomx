@@ -1,5 +1,5 @@
+import AtomxApi from "./AtomxApi"
 import Events from "./events"
-import AtomxApi from "./skyblock/AtomxApi"
 
 export default Atomx = {
     Events: Events

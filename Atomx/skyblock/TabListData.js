@@ -1,8 +1,15 @@
-import AtomxApi from "./AtomxApi"
+import AtomxApi from "../AtomxApi"
+import { TextHelper } from "../helper/Text"
 import { onTabUpdatePacket } from "./Register"
-import { TextHelper } from "./Text"
 
+/**
+ * - Class that handles certain data that the user recieves from TabList
+ * @class
+ */
 export default new class TabListData {
+    /**
+     * - Creates a new [TabListData] class
+     */
     constructor() {
         // Init methods
         this._reset()

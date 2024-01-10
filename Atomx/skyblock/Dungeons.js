@@ -1,10 +1,10 @@
-import AtomxApi from "./AtomxApi"
-import { DateHelper } from "./Date"
-import { NumberHelper } from "./Number"
-import { Persistence } from "./Persistence"
-import { onBlessingsChange, onScoreboardPacket, onTabUpdatePacket } from "./Register"
-import { TextHelper } from "./Text"
+import AtomxApi from "../AtomxApi"
+import { DateHelper } from "../helper/Date"
+import { NumberHelper } from "../helper/Number"
+import { Persistence } from "../helper/Persistence"
+import { TextHelper } from "../helper/Text"
 import { WorldState } from "./World"
+import { onBlessingsChange, onScoreboardPacket, onTabUpdatePacket } from "./Register"
 
 /**
  * - A class that handles all sorts of utilities for dungeons

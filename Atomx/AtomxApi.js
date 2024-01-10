@@ -1,11 +1,16 @@
-import { Persistence } from "./Persistence"
-import { TextHelper } from "./Text"
+import { Persistence } from "./helper/Persistence"
+import { TextHelper } from "./helper/Text"
 
-// This class loads the repo's api data for this library
-// regex, criterias etc
+/**
+ * - This class loads the repo's api data for this library regex, criterias etc
+ * @class
+ */
 export default new class AtomxApi {
     static AtomxPrefix = `&c[&4Atomx&c]&r`
 
+    /**
+     * - Creates a new AtomxApi class
+     */
     constructor() {
         this.api = Persistence.getDataFromFile("Atomx", "AtomxApi.json") ?? Persistence.getDataFromURL("https://raw.githubusercontent.com/DocilElm/Atomx/main/api/api.json")
         this.RegexData = this.api.RegexData
@@ -26,7 +31,6 @@ export default new class AtomxApi {
 
     /**
      * - Runs the given function whenever the AtomxApi gets updated
-     * 
      * @param {Function} fn 
      * @returns this for method chaining
      */
@@ -36,6 +40,9 @@ export default new class AtomxApi {
         return this
     }
 
+    /**
+     * - Internal use
+     */
     _refresh() {
         this.api = Persistence.getDataFromURL("https://raw.githubusercontent.com/DocilElm/Atomx/main/api/api.json")
         this.RegexData = this.api.RegexData
@@ -55,10 +62,16 @@ export default new class AtomxApi {
         ChatLib.chat(ChatLib.getChatBreak("&c-"))
     }
 
+    /**
+     * - Internal use
+     */
     _saveData() {
         Persistence.saveDataToFile("Atomx", "AtomxApi.json", this.api, true)
     }
 
+    /**
+     * - Internal use
+     */
     _checkVersion() {
         const repoVersion = Persistence.getDataFromURL("https://raw.githubusercontent.com/DocilElm/Atomx/main/api/api.json").apiVersion
         const localVersion = this.api.apiVersion
@@ -68,6 +81,10 @@ export default new class AtomxApi {
         this._refresh()
     }
 
+    /**
+     * - Gets the regex data from the Atomx's api
+     * @returns {Object}
+     */
     getRegexData() {
         const obj = {}
 
@@ -88,18 +105,34 @@ export default new class AtomxApi {
         return obj
     }
 
+    /**
+     * - Gets the [BossEntryMessage] data from Atomx's api
+     * @returns {Array}
+     */
     getBossEntryMessage() {
         return this.BossEntryMessage
     }
 
+    /**
+     * - Gets the [GardenItemID] data from Atomx's api
+     * @returns {Object}
+     */
     getGardenItemID() {
         return this.GardenItemID
     }
 
+    /**
+     * - Gets the [GardenRareItems] data from Atomx's api
+     * @returns {Object}
+     */
     getGardenRareItems() {
         return this.GardenRareItems
     }
 
+    /**
+     * - Gets the [TrophyFishColors] data from Atomx's api
+     * @returns {Object}
+     */
     getTrophyFishColors() {
         return this.TrophyFishColors
     }
