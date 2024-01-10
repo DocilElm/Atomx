@@ -25,8 +25,8 @@ export default new class EventBus {
 
         // Setup an entry in the profiler for every event to measure
         // how many times the event was called during the profiler
-        for (event_name in Object.keys(this.events)) {
-            this.profiler.set(event_name, 0)
+        for (event_name of Object.keys(this.events)) {
+            this.profiler.set(event_name, { timesRan: 0 })
         }
 
         this.profiling = true
@@ -34,6 +34,7 @@ export default new class EventBus {
 
     StopProfiler() {
         this.profiling = false
+
         // I hate javascript ~~sometimes~~ all the time - Dalwyn
         return this.profiler && delete this.profiler
     }

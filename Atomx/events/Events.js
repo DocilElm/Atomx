@@ -23,22 +23,20 @@ export class EventFactory {
             // Update the profiler's count when the function is ran
             // if the profiler is currently being run
             if (!EventBus.profiling) return
-            EventBus.profiler[this.name] += 1
+            
+            let busObj = EventBus.profiler.get(this.name)
+            busObj.timesRan += 1
         }
 
         start() {
-            if (!this.register) {
-                throw new Error(`This event ${this.name} does not have an assigned register, it cannot be started`)
-            }
+            if (!this.register) throw new Error(`This event ${this.name} does not have an assigned register, it cannot be started`)
 
             this.running = true
             this.register.register()
         }
 
         stop() {
-            if (!this.register) {
-                throw new Error(`This event ${this.name} does not have an assigned register, it cannot be stopped`)
-            }
+            if (!this.register) throw new Error(`This event ${this.name} does not have an assigned register, it cannot be stopped`)
 
             this.running = false
             this.register.unregister()

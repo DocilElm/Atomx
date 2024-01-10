@@ -11,12 +11,15 @@
 import EventBus from "./EventBus"
 import { CommandEvent, StepEvent, TickEvent } from "./Events"
 
-// Interface to export
+/**
+ * - Event Interface
+ * @class
+ */
 export default class Events {
     /**
      * - Create an event
      * 
-     * @param {*} name The name of the event 
+     * @param {String} name The name of the event 
      * @param {Function} callback The function to call when the event is fired
      * @param {object?} properties 
      * @returns {object} Event
