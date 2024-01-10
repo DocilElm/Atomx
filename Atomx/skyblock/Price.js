@@ -17,7 +17,7 @@ export default new class Price {
         this.update()
 
         // Load all the data required
-        if (this.lastSave) this.loadApiData()
+        this.loadApiData()
 
         // Refresh values
         register("step", this.update.bind(this)).setFps(1)
@@ -33,6 +33,8 @@ export default new class Price {
 
         const bzApi = bzFile.bzPrices
         const lbApi = Persistence.getDataFromFile("Atomx", "LowestBin.json")
+
+        if (!bzApi || !this.lastSave) return this.lastSave = null
 
         Object.entries(bzApi).forEach(([key, value]) => {
             this.bazaarBuyApi.set(key, value.buy)

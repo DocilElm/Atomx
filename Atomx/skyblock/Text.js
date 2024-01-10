@@ -1,3 +1,7 @@
+/**
+ * - A class that handles text specific functions
+ * @class
+ */
 export class TextHelper {
 
     /**

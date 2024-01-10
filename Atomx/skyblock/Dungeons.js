@@ -6,6 +6,10 @@ import { onBlessingsChange, onScoreboardPacket, onTabUpdatePacket } from "./Regi
 import { TextHelper } from "./Text"
 import { WorldState } from "./World"
 
+/**
+ * - A class that handles all sorts of utilities for dungeons
+ * @class
+ */
 export default new class Dungeons {
     constructor() {
         // These variables will and should not be reset after world change
@@ -114,10 +118,9 @@ export default new class Dungeons {
         this.DataFile = Persistence.getDataFromFile("Atomx", "DungeonsData.json")
         this.DungeonsData = this.DataFile?.DungeonsData ?? Persistence.getDataFromURL("https://soopy.dev/api/bettermap/roomdata")
         this.savedDate = this.DataFile?.lastSave
-        /**
-         * - This is a [Map] that stores all of the room data not the
-         * current dungeon's map but the whole dungeons data
-         */
+        
+        // - This is a [Map] that stores all of the room data not the
+        // current dungeon's map but the whole dungeons data
         this.DungeonsMapData = new Map()
     }
 
