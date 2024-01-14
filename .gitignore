@@ -1,0 +1,2 @@
+# A MacOS specific file we don't want tracked
+.DS_Store
