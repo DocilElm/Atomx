@@ -1,5 +1,5 @@
 {
-    "apiVersion": "0.1.2",
+    "apiVersion": "1.1.2",
     "changelog": ["Fix typo on GardenItemID"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
@@ -162,6 +162,47 @@
                 "pattern": "^ Stored Compost\\: ([\\w\\d,. ]+)$",
                 "flags": ""
             }
+        },
+        "ItemHandler": {
+            "Essence": {
+                "pattern": "(Undead|Wither) Essence x(\\d+)",
+                "flags": ""
+            }
+        },
+        "Party": {
+            "MemberAmount": {
+                "pattern": "^Party Members \\((\\d+)\\)$",
+                "flags": ""
+            },
+            "PartyMembers": {
+                "pattern": "^Party (Members|Moderators)\\: (.+ ●) ?$",
+                "flags": ""
+            }
+        },
+        "PartyArray": {
+            "NoParty": [
+                "^You are not currently in a party\\.$",
+                "^You have been kicked from the party by (?:\\[[A-z\\+]+\\])? ?([\\w]{1,16})$",
+                "^The party was disbanded because the party leader disconnected\\.$",
+                "^The party was disbanded because all invites expired and the party was empty\\.$",
+                "^You left the party\\.$"
+            ],
+            "PartyLeader": [
+                "^Party Leader\\: (?:\\[[A-z\\+]+\\])? ?([\\w]{1,16}) ●$",
+                "^The party was transferred to (?:\\[[A-z\\+]+\\])? ?([\\w]{1,16}) by .+$",
+                "^You have joined (?:\\[[A-z\\+]+\\])? ?([\\w]{1,16})\\'s party\\!$",
+                "^(?:\\[[A-z]+\\++\\])? ?([\\w]{1,16}) invited .+ to the party\\! They have 60 seconds to accept\\.$"
+            ],
+            "PlayerJoined": [
+                "^(?:\\[[A-z]+\\++\\])? ?([\\w]{1,16}) joined the party\\.$",
+                "^.+ invited (?:\\[[A-z]+\\++\\])? ?([\\w]{1,16}) to the party\\! They have 60 seconds to accept\\.$"
+            ],
+            "PlayerLeft": [
+                "^(?:\\[[A-z]+\\++\\])? ?([\\w]{1,16}) has been removed from the party\\.$",
+                "^(?:\\[[A-z]+\\++\\])? ?([\\w]{1,16}) has left the party\\.$",
+                "^(?:\\[[A-z]+\\++\\])? ?([\\w]{1,16}) was removed from your party because they disconnected\\.$",
+                "^Kicked (?:\\[[A-z]+\\++\\])? ?([\\w]{1,16}) because they were offline\\.$"
+            ]
         }
     }
 }
