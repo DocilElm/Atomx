@@ -1,3 +1,4 @@
+import AtomxApi from "../AtomxApi"
 import { onActionbarPacket, onOpenWindowPacket, onScoreboardPacket, onWindowItemsPacket } from "./Register"
 
 const removeCommas = (string) => parseFloat(string.replace(/,/g, ""))
@@ -58,72 +59,59 @@ export default new class ThePlayer {
 
                 const unformattedName = item.getName().removeFormatting()
 
-                // TODO: make this mess less messy maybe even use switch also make the regex's into their own variables
+                switch (unformattedName) {
+                    case "Your SkyBlock Profile":
+                        this.playerStats = item.getLore().reduce((a, b) => {
+                            if (!this.playerStatsRegex.test(b.removeFormatting())) return a
+    
+                            const [ _, name, amount ] = b.removeFormatting().match(this.playerStatsRegex)
+    
+                            a[name] = {
+                                amount: removeCommas(amount),
+                                formatted: b
+                            }
+    
+                            return a
+                        }, {})
+                        break
 
-                // Add player stats from sb menu's skyblock player item
-                if (unformattedName === "Your SkyBlock Profile") {
-                    this.playerStats = item.getLore().reduce((a, b) => {
-                        if (!/^ . ([A-z ]+) ([\d,.\%]+)$/.test(b.removeFormatting())) return a
+                    case "Your Skills":
+                        item.getLore().forEach(value => {
+                            if (!this.skillAvgRegex.test(value.removeFormatting())) return
+    
+                            this.skillAvg = parseFloat(value.removeFormatting().match(this.skillAvgRegex)[1])
+                        })
+                        break
 
-                        const [ _, name, amount ] = b.removeFormatting().match(/^ . ([A-z ]+) ([\d,.\%]+)$/)
+                    case "Collections":
+                        item.getLore().forEach(value => {
+                            if (!this.collectionRegex.test(value.removeFormatting())) return
+    
+                            const [ _, collection, totalCollection ] = value.removeFormatting().match(this.collectionRegex)
+    
+                            this.collection = parseInt(collection)
+                            this.totalCollection = parseInt(totalCollection)
+                        })
+                        break
 
-                        a[name] = {
-                            amount: removeCommas(amount),
-                            formatted: b
-                        }
+                    case "Booster Cookie":
+                        item.getLore().forEach(value => {
+                            if (this.bitsAvailableRegex.test(value.removeFormatting())) return this.bitsAvailable = removeCommas(value.removeFormatting().match(this.bitsAvailableRegex)[1])
+                            if (!this.cookieDurationRegex.test(value.removeFormatting())) return
+                            
+                            this.cookieDuration = value.removeFormatting().match(this.cookieDurationRegex)[1]
+                        })
+                        break
 
-                        return a
-                    }, {})
-
-                    return
-                }
-
-                // Add player's skill average
-                if (unformattedName === "Your Skills") {
-                    item.getLore().forEach(value => {
-                        if (!/^([\d,.]+) Skill Avg\. \(non-cosmetic\)$/.test(value.removeFormatting())) return
-
-                        this.skillAvg = parseFloat(value.removeFormatting().match(/^([\d,.]+) Skill Avg\. \(non-cosmetic\)$/)[1])
-                    })
-
-                    return
-                }
-
-                // Add collection(s) amount
-                if (unformattedName === "Collections") {
-                    item.getLore().forEach(value => {
-                        if (!/^ *(\d+)\/(\d+)$/.test(value.removeFormatting())) return
-
-                        const [ _, collection, totalCollection ] = value.removeFormatting().match(/^ *(\d+)\/(\d+)$/)
-
-                        this.collection = parseInt(collection)
-                        this.totalCollection = parseInt(totalCollection)
-                    })
-
-                    return
-                }
-
-                // Add booster cookie's available bits
-                if (unformattedName === "Booster Cookie") {
-                    item.getLore().forEach(value => {
-                        if (/^Bits Available\: ([\d,.]+)$/.test(value.removeFormatting())) return this.bitsAvailable = removeCommas(value.removeFormatting().match(/^Bits Available\: ([\d,.]+)$/)[1])
-                        if (!/^Duration\: (.+)$/.test(value.removeFormatting())) return
-                        
-                        this.cookieDuration = value.removeFormatting().match(/^Duration\: (.+)$/)[1]
-                    })
-
-                    return
-                }
-
-                // Add the player's current equipped pet
-                if (unformattedName === "Pets") {
-                    item.getLore().forEach(value => {
-                        if (!/^Selected pet\: ([A-z ]+) ?✦?$/.test(value.removeFormatting())) return 
-
-                        this.currentPet = value.removeFormatting().match(/^Selected pet\: ([A-z ]+) ?✦?$/)[1]
-                    })
-
-                    return
+                    case "Pets":
+                        item.getLore().forEach(value => {
+                            if (!this.selectedPetRegex.test(value.removeFormatting())) return 
+    
+                            this.currentPet = value.removeFormatting().match(this.selectedPetRegex)[1]
+                        })
+                        break
+                
+                    default: break
                 }
 
             })
@@ -137,17 +125,29 @@ export default new class ThePlayer {
      * - Internal use
      */
     _reloadRegex() {
+        const ThePlayerRegex = AtomxApi.getRegexData()?.ThePlayer
+
+        if (!ThePlayerRegex) return
+
         // Scoreboard
-        this.purseRegex = /^Purse\: ([\d,.]+) ?(?:[\(\)\d\+,.]+)?$/
-        this.bitsRegex = /^Bits\: ([\d,.]+) ?(?:[\(\)\d\+,.]+)?$/
-        this.copperRegex = /^Copper\: ([\d,.]+) ?(?:[\(\)\d\+,.]+)?$/
-        this.motesRegex = /^Motes\: ([\d,.]+) ?(?:[\(\)\d\+,.]+)?$/
+        this.purseRegex = ThePlayerRegex.Purse
+        this.bitsRegex = ThePlayerRegex.Bits
+        this.copperRegex = ThePlayerRegex.Copper
+        this.motesRegex = ThePlayerRegex.Motes
 
         // Actionbar
-        this.healthRegex = /^(\d[,\d]+)\/([\d,]+)❤/
-        this.defenseRegex = /([\d,]+)❈ Defense/
-        this.manaRegex = /(\d[\d,]+)\/([\d,]+)✎/
-        this.overflowManaRegex = /(\d[\d,.]+)ʬ/
+        this.healthRegex = ThePlayerRegex.Health
+        this.defenseRegex = ThePlayerRegex.Defense
+        this.manaRegex = ThePlayerRegex.Mana
+        this.overflowManaRegex = ThePlayerRegex.OverflowMana
+
+        // Skyblock Menu
+        this.playerStatsRegex = ThePlayerRegex.PlayerStats
+        this.skillAvgRegex = ThePlayerRegex.SkillAverage
+        this.collectionRegex = ThePlayerRegex.Collection
+        this.bitsAvailableRegex = ThePlayerRegex.BitsAvailable
+        this.cookieDurationRegex = ThePlayerRegex.CookieDuration
+        this.selectedPetRegex = ThePlayerRegex.SelectedPet
     }
     
     /**

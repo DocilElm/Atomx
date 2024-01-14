@@ -96,10 +96,30 @@ export default new class AtomxApi {
 
             Object.keys(this.RegexData[category]).forEach(key => {
                 const pattern = this.RegexData[category][key].pattern
+                if (!pattern) return
+
                 const flags = this.RegexData[category][key].flags
 
                 obj[category][key] = TextHelper.getRegexFromString(pattern, flags)
             })
+        })
+
+        return obj
+    }
+
+    /**
+     * - Gets the regex data from the [PartyArray] Atomx api entry
+     * @returns {Object}
+     */
+    getPartyArray() {
+        const obj = {}
+
+        Object.keys(this.RegexData.PartyArray).forEach(category => {
+            if (!(category in obj)) obj[category] = []
+
+            const arr = this.RegexData.PartyArray[category].map(reg => TextHelper.getRegexFromString(reg, ""))
+            obj[category] = arr
+
         })
 
         return obj

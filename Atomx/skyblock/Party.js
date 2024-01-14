@@ -1,3 +1,4 @@
+import AtomxApi from "../AtomxApi"
 import { onChatPacket } from "./Register"
 
 const messagesToHide = [
@@ -23,6 +24,9 @@ export default new class Party {
         // Init methods
         this._reset()
         this._reloadRegex()
+
+        // Reload regex if the api was changed
+        AtomxApi.onApiUpdate(this._reloadRegex.bind(this))
 
         this.register = register("step", () => {
             if (!World.isLoaded() || this.commandSent) return
@@ -89,40 +93,22 @@ export default new class Party {
         }, reg))
     }
 
-    // maybe add this into the api instead of here
     /**
      * - Internal use
      */
     _reloadRegex() {
-        this.membersAmountRegex = /^Party Members \((\d+)\)$/
-        this.partyMembersRegex = /^Party (Members|Moderators)\: (.+ ●) ?$/
+        const PartyArray = AtomxApi.getPartyArray()
+        const PartyRegex = AtomxApi.getRegexData()?.Party
 
-        this.noParty = [
-            /^You are not currently in a party\.$/,
-            /^You have been kicked from the party by (?:\[[A-z\+]+\])? ?([\w]{1,16})$/,
-            /^The party was disbanded because the party leader disconnected\.$/,
-            /^The party was disbanded because all invites expired and the party was empty\.$/,
-            /^You left the party\.$/
-        ]
+        if (!PartyArray || !PartyRegex) return
 
-        this.partyLeader = [
-            /^Party Leader\: (?:\[[A-z\+]+\])? ?([\w]{1,16}) ●$/,
-            /^The party was transferred to (?:\[[A-z\+]+\])? ?([\w]{1,16}) by .+$/,
-            /^You have joined (?:\[[A-z\+]+\])? ?([\w]{1,16})\'s party\!$/,
-            /^(?:\[[A-z]+\++\])? ?([\w]{1,16}) invited .+ to the party\! They have 60 seconds to accept\.$/
-        ]
+        this.membersAmountRegex = PartyRegex.MemberAmount
+        this.partyMembersRegex = PartyRegex.PartyMembers
 
-        this.playerJoined = [
-            /^(?:\[[A-z]+\++\])? ?([\w]{1,16}) joined the party\.$/,
-            /^.+ invited (?:\[[A-z]+\++\])? ?([\w]{1,16}) to the party\! They have 60 seconds to accept\.$/
-        ]
-
-        this.playerLeft = [
-            /^(?:\[[A-z]+\++\])? ?([\w]{1,16}) has been removed from the party\.$/,
-            /^(?:\[[A-z]+\++\])? ?([\w]{1,16}) has left the party\.$/,
-            /^(?:\[[A-z]+\++\])? ?([\w]{1,16}) was removed from your party because they disconnected\.$/,
-            /^Kicked (?:\[[A-z]+\++\])? ?([\w]{1,16}) because they were offline\.$/
-        ]
+        this.noParty = PartyArray.NoParty
+        this.partyLeader = PartyArray.PartyLeader
+        this.playerJoined = PartyArray.PlayerJoined
+        this.playerLeft = PartyArray.PlayerLeft
     }
 
     /**
