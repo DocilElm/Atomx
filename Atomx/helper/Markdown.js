@@ -67,5 +67,8 @@ export default class MakeMarkdown {
             this.markdownText,
             true
         )
+
+        this.markdownText = ""
+        this.className = ""
     }
 }

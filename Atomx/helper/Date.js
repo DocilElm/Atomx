@@ -1,5 +1,9 @@
 import { NumberHelper } from "./Number"
 
+/**
+ * - Date utility functions
+ * @class
+ */
 export class DateHelper {
     /**
      * - Gets the seconds since starting date

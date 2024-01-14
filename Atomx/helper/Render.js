@@ -44,7 +44,21 @@ const getAxisValues = (axis) => [
         axis.field_72334_f // Max Z
     ]
 
+/**
+ * - Class that adds some utilities for rendering
+ * @class
+ */
 export class RenderHelper {
+    /**
+     * - Draws an outline box at the given block hitbox
+     * @param {Block} ctBlock 
+     * @param {Number} r 
+     * @param {Number} g 
+     * @param {Number} b 
+     * @param {Number} a 
+     * @param {Boolean} phase 
+     * @param {Number} thick 
+     */
     static outlineBlock(ctBlock, r, g, b, a, phase = true, thick = 3) {
         const [ x0, y0, z0, x1, y1, z1 ] = getBlockBoundingBox(ctBlock)
 
@@ -92,6 +106,15 @@ export class RenderHelper {
         Tessellator.popMatrix()
     }
 
+    /**
+     * - Draws a filled box at the given block hitbox
+     * @param {Block} ctBlock 
+     * @param {Number} r 
+     * @param {Number} g 
+     * @param {Number} b 
+     * @param {Number} a 
+     * @param {Boolean} phase 
+     */
     static filledBlock(ctBlock, r, g, b, a, phase = true) {
         const [ x0, y0, z0, x1, y1, z1 ] = getBlockBoundingBox(ctBlock)
 
@@ -202,7 +225,7 @@ export class RenderHelper {
     }
 
     /**
-     * 
+     * - Draws a line through the given points
      * @param {Number[][]} points - List of vertices as [[x, y, z], [x, y, z], ...]
      * @param {Number} r 
      * @param {Number} g 

@@ -1,3 +1,7 @@
+/**
+ * - Mostly file utilities
+ * @class
+ */
 export class Persistence {
     /**
      * - Gets the data from the given url and returns it as [JSON] format
