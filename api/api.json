@@ -1,6 +1,6 @@
 {
-    "apiVersion": "1.1.2",
-    "changelog": ["Fix typo on GardenItemID"],
+    "apiVersion": "1.2.2",
+    "changelog": ["Add ThePlayer class's regex data"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
         "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
@@ -203,6 +203,64 @@
                 "^(?:\\[[A-z]+\\++\\])? ?([\\w]{1,16}) was removed from your party because they disconnected\\.$",
                 "^Kicked (?:\\[[A-z]+\\++\\])? ?([\\w]{1,16}) because they were offline\\.$"
             ]
+        },
+        "ThePlayer": {
+            "Purse": {
+                "pattern": "^Purse\\: ([\\d,.]+) ?(?:[\\(\\)\\d\\+,.]+)?$",
+                "flags": ""
+            },
+            "Bits": {
+                "pattern": "^Bits\\: ([\\d,.]+) ?(?:[\\(\\)\\d\\+,.]+)?$",
+                "flags": ""
+            },
+            "Copper": {
+                "pattern": "^Copper\\: ([\\d,.]+) ?(?:[\\(\\)\\d\\+,.]+)?$",
+                "flags": ""
+            },
+            "Motes": {
+                "pattern": "^Motes\\: ([\\d,.]+) ?(?:[\\(\\)\\d\\+,.]+)?$",
+                "flags": ""
+            },
+            "Health": {
+                "pattern": "^(\\d[,\\d]+)\\/([\\d,]+)❤",
+                "flags": ""
+            },
+            "Defense": {
+                "pattern": "([\\d,]+)❈ Defense",
+                "flags": ""
+            },
+            "Mana": {
+                "pattern": "(\\d[\\d,]+)\\/([\\d,]+)✎",
+                "flags": ""
+            },
+            "OverflowMana": {
+                "pattern": "(\\d[\\d,.]+)ʬ",
+                "flags": ""
+            },
+            "PlayerStats": {
+                "pattern": "^ . ([A-z ]+) ([\\d,.\\%]+)$",
+                "flags": ""
+            },
+            "SkillAverage": {
+                "pattern": "^([\\d,.]+) Skill Avg\\. \\(non-cosmetic\\)$",
+                "flags": ""
+            },
+            "Collection": {
+                "pattern": "^ *(\\d+)\/(\\d+)$",
+                "flags": ""
+            },
+            "BitsAvailable": {
+                "pattern": "^Bits Available\\: ([\\d,.]+)$",
+                "flags": ""
+            },
+            "CookieDuration": {
+                "pattern": "^Duration\\: (.+)$",
+                "flags": ""
+            },
+            "SelectedPet": {
+                "pattern": "^Selected pet\\: ([A-z ]+) ?✦?$",
+                "flags": ""
+            }
         }
     }
 }
