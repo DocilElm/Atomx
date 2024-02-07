@@ -1,6 +1,6 @@
 {
-    "apiVersion": "1.2.2",
-    "changelog": ["Add ThePlayer class's regex data"],
+    "apiVersion": "1.3.2",
+    "changelog": ["Add BossRoomIDs"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
         "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
@@ -76,6 +76,15 @@
         "Karate Fish": "&5",
         "Golden Fish": "&6"
     },
+    "BossRoomID": [
+        "30,30",
+        "30,125",
+        "30,225",
+        "30,344",
+        "livid",
+        "sadan",
+        "f7"
+    ],
     "RegexData": {
         "Dungeons": {
             "Floor": {
