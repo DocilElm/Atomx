@@ -6,6 +6,12 @@ import { TextHelper } from "../helper/Text"
 import { WorldState } from "./World"
 import { onBlessingsChange, onScoreboardPacket, onTabUpdatePacket } from "./Register"
 
+const PuzzleEnums = {
+    "✦": 0,
+    "✔": 1,
+    "✖": 2
+}
+
 /**
  * - A class that handles all sorts of utilities for dungeons
  * @class
@@ -63,6 +69,14 @@ export default new class Dungeons {
                 return
             }
 
+            if (this.puzzleHandlerRegex.test(tabName)) {
+                const [ _, puzzleName, puzzleSymbol, usernameFailed ] = tabName.match(this.puzzleHandlerRegex)
+
+                this.listeners.puzzles?.forEach(fn => fn(puzzleName, PuzzleEnums[puzzleSymbol], usernameFailed))
+
+                return
+            }
+
             this.secretsFound = TextHelper.getRegexMatch(this.secretsFoundRegex, tabName)?.[1] ?? this.secretsFound
             this.currentMilestone = TextHelper.getRegexMatch(this.milestoneRegex, tabName)?.[1] ?? this.currentMilestone
             this.completedRooms = TextHelper.getRegexMatch(this.completedRoomsRegex, tabName)?.[1] ?? this.completedRooms
@@ -95,6 +109,7 @@ export default new class Dungeons {
         this.teamDeathRegex = regexData.TeamDeaths
         this.puzzlesAmountRegex = regexData.PuzzlesAmount
         this.cryptsAmountRegex = regexData.CryptsAmount
+        this.puzzleHandlerRegex = regexData.PuzzleHandler
         this.bossRoomID = new Set(AtomxApi.getBossRoomID())
     }
 
@@ -257,6 +272,20 @@ export default new class Dungeons {
         if (!(roomName.toLowerCase() in this.listeners)) this.listeners[roomName.toLowerCase()] = []
 
         this.listeners[roomName.toLowerCase()].push(fn)
+
+        return this
+    }
+
+    /**
+     * - Runs the given function whenever an event happens with tab puzzle
+     * - E.g puzzle enter = 0, puzzle completed = 1, puzzle failed = 2. the event is sent as a param to the fn
+     * @param {Function} fn 
+     * @returns this for method chaining
+     */
+    onPuzzleEvent(fn) {
+        if (!("puzzles" in this.listeners)) this.listeners.puzzles = []
+
+        this.listeners.puzzles.push(fn)
 
         return this
     }
