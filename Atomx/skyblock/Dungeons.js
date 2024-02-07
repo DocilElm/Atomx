@@ -15,6 +15,7 @@ export default new class Dungeons {
         // These variables will and should not be reset after world change
         this.lastClass = null
         this.lastClassLevel = null
+        this.listeners = {}
 
         // Init methods
         this._reloadRegex()
@@ -27,7 +28,14 @@ export default new class Dungeons {
 
         onScoreboardPacket(score => {
             if (this.currentFloorRegex.test(score) && !this.currentFloor) return this.currentFloor = TextHelper.getRegexMatch(this.currentFloorRegex, score)[1]
-            if (this.currentRoomIDRegex.test(score)) return this.currentRoomID = TextHelper.getRegexMatch(this.currentRoomIDRegex, score)[1]
+
+            if (this.currentRoomIDRegex.test(score)) {
+                this.currentRoomID = TextHelper.getRegexMatch(this.currentRoomIDRegex, score)[1]
+
+                // Run all of the listener functions assigned to this room
+                this.listeners[this.getCurrentRoomName()?.toLowerCase()]?.forEach(fn => fn())
+                return
+            }
         })
 
         onTabUpdatePacket(tabName => {
@@ -87,6 +95,7 @@ export default new class Dungeons {
         this.teamDeathRegex = regexData.TeamDeaths
         this.puzzlesAmountRegex = regexData.PuzzlesAmount
         this.cryptsAmountRegex = regexData.CryptsAmount
+        this.bossRoomID = new Set(AtomxApi.getBossRoomID())
     }
 
     /**
@@ -235,5 +244,36 @@ export default new class Dungeons {
         const multiplier = this.isDupeClass("Mage") ? 1 : 2
         const mageReduction = 0.75 - (Math.floor(this.getCurrentClassLevel() / 2) / 100) * multiplier
         return cooldown * mageReduction
+    }
+
+    /**
+     * - Runs the given function whenever the player enters the specified room
+     * @param {String} roomName 
+     * @param {Function} fn 
+     * @returns this for method chaining or null
+     */
+    onRoomEnter(roomName, fn) {
+        if (!roomName) return
+        if (!(roomName.toLowerCase() in this.listeners)) this.listeners[roomName.toLowerCase()] = []
+
+        this.listeners[roomName.toLowerCase()].push(fn)
+
+        return this
+    }
+
+    /**
+     * - Checks whether the current room the player is in is a puzzle
+     * @returns {Boolean}
+     */
+    inPuzzle() {
+        return this.getCurrentRoom()?.type === "puzzle"
+    }
+
+    /**
+     * - Checks whether the player is currently inside boss room
+     * @returns {Boolean}
+     */
+    inBossRoom() {
+        return this.bossRoomID.has(this.getCurrentRoomID())
     }
 }

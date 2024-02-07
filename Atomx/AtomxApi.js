@@ -1,6 +1,8 @@
 import { Persistence } from "./helper/Persistence"
 import { TextHelper } from "./helper/Text"
 
+const sendCenteredMsg = (msg) => ChatLib.chat(ChatLib.getCenteredText(msg))
+
 /**
  * - This class loads the repo's api data for this library regex, criterias etc
  * @class
@@ -18,15 +20,15 @@ export default new class AtomxApi {
         this.GardenItemID = this.api.GardenItemID
         this.GardenRareItems = this.api.GardenRareItems
         this.TrophyFishColors = this.api.TriphyFishColors
+        this.BossRoomID = this.api.BossRoomID
 
         this.eventHandler = new Set()
-
+        
         this._checkVersion()
         this._saveData()
 
-        // Check api version every 5mins
-        // this is for testing purposes prod will be 20mins-30mins
-        register("step", this._checkVersion.bind(this)).setDelay(300)
+        // Check api version every 20mins
+        register("step", this._checkVersion.bind(this)).setDelay(1200)
     }
 
     /**
@@ -55,11 +57,7 @@ export default new class AtomxApi {
 
         this._saveData()
 
-        ChatLib.chat(ChatLib.getChatBreak("&c-"))
-        ChatLib.chat(`${AtomxApi.AtomxPrefix} &aNew api version found updating variables!`)
-        ChatLib.chat(`${AtomxApi.AtomxPrefix} &aChangelogs&f:`)
-        this.api.changelog?.forEach(log => ChatLib.chat(`${AtomxApi.AtomxPrefix} &a> &6${log}`))
-        ChatLib.chat(ChatLib.getChatBreak("&c-"))
+        this.sendChangelog(AtomxApi.AtomxPrefix, " &aNew api version found updating variables!", this.api.changelog)
     }
 
     /**
@@ -155,5 +153,29 @@ export default new class AtomxApi {
      */
     getTrophyFishColors() {
         return this.TrophyFishColors
+    }
+
+    /**
+     * - Gets the [BossRoomID] data from Atomx's api
+     * @returns {Array}
+     */
+    getBossRoomID() {
+        return this.BossRoomID
+    }
+
+    /**
+     * - Sends a changelog like message with the given params
+     * @param {String} prefix The main module prefix
+     * @param {String} title The title of the update
+     * @param {Array} changes The array with the changes made
+     * @param {String} chatBreak The string to use as chat break (default: "&c-")
+     * @param {String} logText The string to use as log text for changelogs (default: " &a> &6")
+     */
+    sendChangelog(prefix, title, changes = [], chatBreak = "&c-", logText = " &a> &6") {
+        ChatLib.chat(ChatLib.getChatBreak(chatBreak))
+        sendCenteredMsg(prefix)
+        sendCenteredMsg(title)
+        changes?.forEach(log => sendCenteredMsg(`${logText}${log}`))
+        ChatLib.chat(ChatLib.getChatBreak(chatBreak))
     }
 }
