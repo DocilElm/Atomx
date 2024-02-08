@@ -1,6 +1,6 @@
 {
-    "apiVersion": "1.4.2",
-    "changelog": ["Add PuzzleHandler Regex"],
+    "apiVersion": "1.5.2",
+    "changelog": ["Add Secrets Regex"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
         "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
@@ -125,6 +125,10 @@
             },
             "CryptsAmount": {
                 "pattern": "^ Crypts: ([\\d]+)$",
+                "flags": ""
+            },
+            "SecretsHandler": {
+                "pattern": "([\\d]+)\\/([\\d]+) Secrets",
                 "flags": ""
             }
         },
