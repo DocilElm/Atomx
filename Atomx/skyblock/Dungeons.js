@@ -4,7 +4,7 @@ import { NumberHelper } from "../helper/Number"
 import { Persistence } from "../helper/Persistence"
 import { TextHelper } from "../helper/Text"
 import { WorldState } from "./World"
-import { onBlessingsChange, onScoreboardPacket, onTabUpdatePacket } from "./Register"
+import { onActionbarPacket, onBlessingsChange, onScoreboardPacket, onTabUpdatePacket } from "./Register"
 
 const PuzzleEnums = {
     "✦": 0,
@@ -40,6 +40,7 @@ export default new class Dungeons {
 
                 // Run all of the listener functions assigned to this room
                 this.listeners[this.getCurrentRoomName()?.toLowerCase()]?.forEach(fn => fn())
+                this.listeners.roomid?.forEach(fn => fn(this.getCurrentRoomName()))
                 return
             }
         })
@@ -90,6 +91,27 @@ export default new class Dungeons {
 
             this.blessings = blessingsArray
         })
+
+        onActionbarPacket(msg => {
+            if (!WorldState.inDungeons() || !this.secretsHandlerRegex.test(msg)) return
+
+            const currentRoom = this.getCurrentRoomName()
+
+            if (!currentRoom) return
+
+            const [ _, secrets, totalSecrets ] = msg.match(this.secretsHandlerRegex)
+
+            if (!(currentRoom in this.roomSecrets)) this.roomSecrets[currentRoom] = [secrets, totalSecrets]
+
+            let roomArr = this.roomSecrets[currentRoom]
+            const amountGathered = (secrets - roomArr[0])
+
+            if (totalSecrets !== roomArr[1] || amountGathered > 2 || amountGathered === 0) return
+
+            roomArr[0] = secrets
+
+            this.listeners.secrets.forEach(fn => fn(secrets, totalSecrets, currentRoom))
+        })
     }
 
     /**
@@ -110,6 +132,7 @@ export default new class Dungeons {
         this.puzzlesAmountRegex = regexData.PuzzlesAmount
         this.cryptsAmountRegex = regexData.CryptsAmount
         this.puzzleHandlerRegex = regexData.PuzzleHandler
+        this.secretsHandlerRegex = regexData.SecretsHandler
         this.bossRoomID = new Set(AtomxApi.getBossRoomID())
     }
 
@@ -124,6 +147,7 @@ export default new class Dungeons {
 
         // Room stuff
         this.currentRoomID = null
+        this.roomSecrets = {}
 
         // Classes stuff
         this.currentClass = null
@@ -277,7 +301,7 @@ export default new class Dungeons {
     }
 
     /**
-     * - Runs the given function whenever an event happens with tab puzzle
+     * - Runs the given function whenever an event happens in tablist with a puzzle
      * - E.g puzzle enter = 0, puzzle completed = 1, puzzle failed = 2. the event is sent as a param to the fn
      * @param {Function} fn 
      * @returns this for method chaining
@@ -286,6 +310,32 @@ export default new class Dungeons {
         if (!("puzzles" in this.listeners)) this.listeners.puzzles = []
 
         this.listeners.puzzles.push(fn)
+
+        return this
+    }
+
+    /**
+     * - Runs the given function whenever the previous "current" secrets gets changed above hotbar (aka actionbar)
+     * @param {Function} fn 
+     * @returns this for method chaining
+     */
+    onSecretsEvent(fn) {
+        if (!("secrets" in this.listeners)) this.listeners.secrets = []
+
+        this.listeners.secrets.push(fn)
+        
+        return this
+    }
+
+    /**
+     * - Runs the given function whenever the roomID changes in the scoreboard returns the room name as a param
+     * @param {Function} fn 
+     * @returns this for method chaining
+     */
+    onRoomIDEvent(fn) {
+        if (!("roomid" in this.listeners)) this.listeners.roomid = []
+
+        this.listeners.roomid.push(fn)
 
         return this
     }
