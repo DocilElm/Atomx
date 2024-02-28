@@ -11,7 +11,7 @@ export class WorldState {
         // Return an empty array if the world isn't loaded
         if (!World.isLoaded()) return []
 
-        return TabList.getNames().map(name => name.removeFormatting())
+        return TabList?.getNames()?.map(name => name?.removeFormatting())
     }
 
     /**
@@ -20,7 +20,10 @@ export class WorldState {
      * @returns {Array}
      */
     static getScoreboard(descending = false) {
-        return Scoreboard.getLines(descending).map(line => line.getName()?.removeFormatting()?.replace(/[^\u0000-\u007F]/g, ""))
+        // Return an empty array if the world isn't loaded
+        if (!World.isLoaded()) return []
+        
+        return Scoreboard.getLines(descending)?.map(line => line?.getName()?.removeFormatting()?.replace(/[^\u0000-\u007F]/g, ""))
     }
 
     /**
@@ -29,7 +32,9 @@ export class WorldState {
      * @returns {Boolean}
      */
     static inTab(string) {
-        return this.getTablist().find(name => name.match(/^(Area|Dungeon): ([\w\d ]+)$/))?.includes(string)
+        if (!World.isLoaded()) return false
+
+        return this.getTablist()?.find(name => name?.match(/^(Area|Dungeon): ([\w\d ]+)$/))?.toLowerCase()?.includes(string.toLowerCase())
     }
 
     /**
@@ -38,7 +43,9 @@ export class WorldState {
      * @returns {Boolean}
      */
     static inScoreboard(string) {
-        return this.getScoreboard().some(names => names.includes(string))
+        if (!World.isLoaded()) return false
+
+        return this.getScoreboard()?.some(names => names?.toLowerCase()?.includes(string.toLowerCase()))
     }
 
     /**
@@ -46,6 +53,8 @@ export class WorldState {
      * @returns {Boolean}
      */
     static inDungeons() {
+        if (!World.isLoaded()) return false
+
         return this.inTab("Catacombs")
     }
 
