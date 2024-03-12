@@ -1,6 +1,6 @@
 {
-    "apiVersion": "1.7.2",
-    "changelog": ["Add New Tablist Regex"],
+    "apiVersion": "1.8.2",
+    "changelog": ["Fix Next Visitor Regex"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
         "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
@@ -167,7 +167,7 @@
                 "flags": ""
             },
             "NextVisitor": {
-                "pattern": "^ Next Visitor\\: ([\\dms]+)$",
+                "pattern": "^ Next Visitor\\: ([\\dms ]+)$",
                 "flags": ""
             },
             "OrganicMatter": {
