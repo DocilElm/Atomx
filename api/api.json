@@ -1,6 +1,6 @@
 {
-    "apiVersion": "1.8.2",
-    "changelog": ["Fix Next Visitor Regex"],
+    "apiVersion": "1.9.2",
+    "changelog": ["Fix Time Regexs not taking spaces into account"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
         "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
@@ -191,11 +191,11 @@
                 "flag": ""
             },
             "CurrentSpray": {
-                "pattern": "^ Spray\\: ([A-z]+) ?\\(?([\\d,.ms]+)?\\)?$",
+                "pattern": "^ Spray\\: ([A-z]+) ?\\(?([\\d,.ms ]+)?\\)?$",
                 "flags": ""
             },
             "BonusFortune": {
-                "pattern": "^ Bonus\\: ([\\d+☘A-z]+) ?([\\dms]+)?$",
+                "pattern": "^ Bonus\\: ([\\d+☘A-z]+) ?([\\dms ]+)?$",
                 "flags": ""
             },
             "TotalVisitors": {
@@ -205,11 +205,11 @@
         },
         "Crimson": {
             "Matriarch": {
-                "pattern": "^ Matriarch\\: ([\\dA-z,.]+)$",
+                "pattern": "^ Matriarch\\: ([\\dA-z,. ]+)$",
                 "flags": ""
             },
             "Aranya": {
-                "pattern": "^ Aranya\\: ([\\dA-z,.]+)$",
+                "pattern": "^ Aranya\\: ([\\dA-z,. ]+)$",
                 "flags": ""
             }
         },
@@ -225,17 +225,17 @@
         },
         "Mines": {
             "Fetchur": {
-                "pattern": "^ Fetchur\\: ([\\dA-z,.]+)$",
+                "pattern": "^ Fetchur\\: ([\\dA-z,. ]+)$",
                 "flags": ""
             },
             "Puzzler": {
-                "pattern": "^ Puzzler\\: ([\\dA-z,.]+)$",
+                "pattern": "^ Puzzler\\: ([\\dA-z,. ]+)$",
                 "flags": ""
             }
         },
         "SpiderDen": {
             "Rain": {
-                "pattern": "^ Rain\\: ([\\dA-z,.]+)$",
+                "pattern": "^ Rain\\: ([\\dA-z,. ]+)$",
                 "flags": ""
             },
             "BroodMother": {
@@ -245,7 +245,7 @@
         },
         "TheFarmingIslands": {
             "Trevor": {
-                "pattern": "^ Tracker\\: ([\\dA-z,.]+)$",
+                "pattern": "^ Tracker\\: ([\\dA-z,. ]+)$",
                 "flags": ""
             },
             "Pelts": {
