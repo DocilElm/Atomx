@@ -1,6 +1,6 @@
 {
-    "apiVersion": "1.6.2",
-    "changelog": ["Add Missing Garden Crops Requirements"],
+    "apiVersion": "1.7.2",
+    "changelog": ["Add New Tablist Regex"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
         "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
@@ -141,7 +141,7 @@
                 "flags": ""
             },
             "PlayerBank": {
-                "pattern": "^ Bank\\: ([\\w\\,.\/]+)",
+                "pattern": "^ Bank\\: ([\\d,.A-z]+) \\/ ([\\d,.A-z]+)$",
                 "flags": ""
             },
             "Skills": {
@@ -149,7 +149,11 @@
                 "flags": ""
             },
             "Stats": {
-                "pattern": "^ ([\\w ]+)\\: (❁|☣|☠|⚔|✦|☘)([\\d,]+)$",
+                "pattern": "^ ([\\w ]+)\\: (❁|☣|☠|⚔|✦|☘|ൠ)([\\d,]+)$",
+                "flags": ""
+            },
+            "Interest": {
+                "pattern": "^ Interest\\: ([\\d A-z]+) \\(([\\d,.A-z]+)\\)$",
                 "flags": ""
             }
         },
@@ -163,7 +167,7 @@
                 "flags": ""
             },
             "NextVisitor": {
-                "pattern": "^Visitors\\: \\((.+)\\)$",
+                "pattern": "^ Next Visitor\\: ([\\dms]+)$",
                 "flags": ""
             },
             "OrganicMatter": {
@@ -180,6 +184,72 @@
             },
             "StoredCompost": {
                 "pattern": "^ Stored Compost\\: ([\\w\\d,. ]+)$",
+                "flags": ""
+            },
+            "PestsAlive": {
+                "pattern": "^ Alive\\: ([\\d,.]+)$",
+                "flag": ""
+            },
+            "CurrentSpray": {
+                "pattern": "^ Spray\\: ([A-z]+) ?\\(?([\\d,.ms]+)?\\)?$",
+                "flags": ""
+            },
+            "BonusFortune": {
+                "pattern": "^ Bonus\\: ([\\d+☘A-z]+) ?([\\dms]+)?$",
+                "flags": ""
+            },
+            "TotalVisitors": {
+                "pattern": "^Visitors: \\((\\d+)\\)$",
+                "flags": ""
+            }
+        },
+        "Crimson": {
+            "Matriarch": {
+                "pattern": "^ Matriarch\\: ([\\dA-z,.]+)$",
+                "flags": ""
+            },
+            "Aranya": {
+                "pattern": "^ Aranya\\: ([\\dA-z,.]+)$",
+                "flags": ""
+            }
+        },
+        "End": {
+            "EyesPlaced": {
+                "pattern": "^ Eyes placed\\: (\\d+)\\/(\\d)$",
+                "flags": ""
+            },
+            "ProtectorStage": {
+                "pattern": "^ Protector\\: ([A-z]+)$",
+                "flags": ""
+            }
+        },
+        "Mines": {
+            "Fetchur": {
+                "pattern": "^ Fetchur\\: ([\\dA-z,.]+)$",
+                "flags": ""
+            },
+            "Puzzler": {
+                "pattern": "^ Puzzler\\: ([\\dA-z,.]+)$",
+                "flags": ""
+            }
+        },
+        "SpiderDen": {
+            "Rain": {
+                "pattern": "^ Rain\\: ([\\dA-z,.]+)$",
+                "flags": ""
+            },
+            "BroodMother": {
+                "pattern": "^ Broodmother\\: ([A-z,.]+)$",
+                "flags": ""
+            }
+        },
+        "TheFarmingIslands": {
+            "Trevor": {
+                "pattern": "^ Tracker\\: ([\\dA-z,.]+)$",
+                "flags": ""
+            },
+            "Pelts": {
+                "pattern": "^ Pelts\\: ([\\d,.]+)$",
                 "flags": ""
             }
         },
@@ -279,6 +349,18 @@
             },
             "SelectedPet": {
                 "pattern": "^Selected pet\\: ([A-z ]+) ?✦?$",
+                "flags": ""
+            },
+            "CurrentPet": {
+                "pattern": "^ \\[Lvl (\\d+)\\] ([A-z ]+)$",
+                "flags": ""
+            },
+            "CurrentPetXp": {
+                "pattern": "^ ([\\d,.]+)\\/([\\d,.KM]+) XP \\(([\\d.]+)%\\)$",
+                "flags": ""
+            },
+            "CurrentSbLevel": {
+                "pattern": "^ SB Level\\: \\[(\\d+)\\] (\\d+)\\/(\\d+) XP$",
                 "flags": ""
             }
         }
