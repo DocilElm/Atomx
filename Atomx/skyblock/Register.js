@@ -6,6 +6,7 @@ import { TextHelper } from "../helper/Text"
 
 let scoreboardEvents = []
 let tablsitEvents = []
+let tablsitAddEvents = []
 let blessingEvents = []
 let chatPacketEvents = []
 let actionbarPacketEvent = []
@@ -14,6 +15,7 @@ let windowItemsPacketEvent = []
 
 export const onScoreboardPacket = (fn, criteria = null) => scoreboardEvents.push([fn, criteria])
 export const onTabUpdatePacket = (fn, criteria = null) => tablsitEvents.push([fn, criteria])
+export const onTabAddPacket = (fn, criteria = null) => tablsitAddEvents.push([fn, criteria])
 export const onBlessingsChange = (fn) => blessingEvents.push(fn)
 export const onChatPacket = (fn, criteria = null) => chatPacketEvents.push([fn, criteria])
 export const onActionbarPacket = (fn, criteria = null) => actionbarPacketEvent.push([fn, criteria])
@@ -59,6 +61,26 @@ register("packetReceived", (packet) => {
 
         // TextHelper.matchesCriteria(fn, criteria, unformatted, event, formatted)
         tablsitEvents.forEach(event => TextHelper.matchesCriteria(event[0], event[1], unformatted, event, formatted))
+    })
+}).setFilteredClass(S38PacketPlayerListItem)
+
+register("packetReceived", (packet, rEvent) => {
+    const players = packet.func_179767_a() // .getPlayers()
+    const action = packet.func_179768_b() // .getAction()
+
+    if (action !== S38PacketPlayerListItem.Action.ADD_PLAYER) return
+
+    players.forEach(addPlayerData => {
+        const name = addPlayerData.func_179961_d() // .getDisplayName()
+        
+        if (!name) return
+
+        const formatted = name.func_150254_d() // .getFormattedText()
+        const unformatted = formatted.removeFormatting()
+    
+        if (action !== S38PacketPlayerListItem.Action.ADD_PLAYER) return
+
+        tablsitAddEvents.forEach(event => TextHelper.matchesCriteria(event[0], event[1], unformatted, event, formatted))
     })
 }).setFilteredClass(S38PacketPlayerListItem)
 

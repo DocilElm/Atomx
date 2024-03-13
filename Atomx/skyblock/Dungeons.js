@@ -110,7 +110,7 @@ export default new class Dungeons {
 
             roomArr[0] = secrets
 
-            this.listeners.secrets.forEach(fn => fn(secrets, totalSecrets, currentRoom))
+            this.listeners.secrets?.forEach(fn => fn(secrets, totalSecrets, currentRoom))
         })
     }
 
