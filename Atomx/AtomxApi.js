@@ -19,7 +19,7 @@ export default new class AtomxApi {
         this.BossEntryMessage = this.api.BossEntryMessage
         this.GardenItemID = this.api.GardenItemID
         this.GardenRareItems = this.api.GardenRareItems
-        this.TrophyFishColors = this.api.TriphyFishColors
+        this.TrophyFishColors = this.api.TrophyFishColors
         this.BossRoomID = this.api.BossRoomID
 
         this.eventHandler = new Set()
@@ -51,7 +51,7 @@ export default new class AtomxApi {
         this.BossEntryMessage = this.api.BossEntryMessage
         this.GardenItemID = this.api.GardenItemID
         this.GardenRareItems = this.api.GardenRareItems
-        this.TrophyFishColors = this.api.TriphyFishColors
+        this.TrophyFishColors = this.api.TrophyFishColors
 
         this.eventHandler.forEach(fn => fn())
 

@@ -2,6 +2,6 @@
     "name": "Atomx",
     "creator": "DocilElm and Dalwyn",
     "description": "This is a library used by other modules",
-    "version": "1.23.6",
+    "version": "1.24.6",
     "requires": ["requestV2", "PromiseV2"]
 }
