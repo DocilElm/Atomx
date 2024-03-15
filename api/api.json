@@ -1,6 +1,6 @@
 {
-    "apiVersion": "1.11.2",
-    "changelog": ["Fix typo"],
+    "apiVersion": "1.12.2",
+    "changelog": ["Fix next visitor regex", "Remove old trophy fish colors api", "Add infested plots regex"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
         "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
@@ -58,26 +58,6 @@
         "Replenish I": "ENCHANTMENT_REPLENISH_1",
         "Replenish 1": "ENCHANTMENT_REPLENISH_1",
         "Jungle Key": "JUNGLE_KEY"
-    },
-    "TriphyFishColors": {
-        "Sulphur Skitter": "&f",
-        "Obfuscated 1": "&f",
-        "Steaming-Hot Flounder": "&f",
-        "Gusher": "&f",
-        "Blobfish": "&f",
-        "Obfuscated 2": "&a",
-        "Slugfish": "&a",
-        "Flyfish": "&a",
-        "Obfuscated 3": "&9",
-        "Lavahorse": "&9",
-        "Mana Ray": "&9",
-        "Volcanic Stonefish": "&9",
-        "Vanille": "&9",
-        "Skeleton Fish": "&5",
-        "Moldfin": "&5",
-        "Soul Fish": "&5",
-        "Karate Fish": "&5",
-        "Golden Fish": "&6"
     },
     "TrophyFishColors": {
         "Sulphur Skitter": "&f",
@@ -187,7 +167,7 @@
                 "flags": ""
             },
             "NextVisitor": {
-                "pattern": "^ Next Visitor\\: ([\\dms ]+)$",
+                "pattern": "^ Next Visitor\\: ([\\dA-z !]+)$",
                 "flags": ""
             },
             "OrganicMatter": {
@@ -220,6 +200,10 @@
             },
             "TotalVisitors": {
                 "pattern": "^Visitors: \\((\\d+)\\)$",
+                "flags": ""
+            },
+            "InfesetedPlots": {
+                "pattern": "^ Infested Plots\\: ([\\d, ]+)$",
                 "flags": ""
             }
         },
