@@ -2,12 +2,12 @@
  * - Class that handles current world utilities
  * @class
  */
-export class WorldState {
+class WorldStateClass {
     /**
      * - Gets the Tablist's names and removes the formatting of them
      * @returns {Array}
      */
-    static getTablist() {
+    getTablist() {
         // Return an empty array if the world isn't loaded
         if (!World.isLoaded()) return []
 
@@ -19,7 +19,7 @@ export class WorldState {
      * @param {Boolean} descending 
      * @returns {Array}
      */
-    static getScoreboard(descending = false) {
+    getScoreboard(descending = false) {
         // Return an empty array if the world isn't loaded
         if (!World.isLoaded()) return []
         
@@ -31,7 +31,7 @@ export class WorldState {
      * @param {String} string 
      * @returns {Boolean}
      */
-    static inTab(string) {
+    inTab(string) {
         if (!World.isLoaded()) return false
 
         return WorldState.getTablist()?.find(name => name?.match(/^(Area|Dungeon): ([\w\d ]+)$/))?.toLowerCase()?.includes(string.toLowerCase())
@@ -42,7 +42,7 @@ export class WorldState {
      * @param {String} string 
      * @returns {Boolean}
      */
-    static inScoreboard(string) {
+    inScoreboard(string) {
         if (!World.isLoaded()) return false
 
         return WorldState.getScoreboard()?.some(names => names?.toLowerCase()?.includes(string.toLowerCase()))
@@ -52,7 +52,7 @@ export class WorldState {
      * - Whether the player is currently inside of dungeons or not
      * @returns {Boolean}
      */
-    static inDungeons() {
+    inDungeons() {
         if (!World.isLoaded()) return false
 
         return WorldState.inTab("Catacombs")
@@ -62,7 +62,7 @@ export class WorldState {
      * - Gets the current tablist world
      * @returns {String}
      */
-    static getCurrentWorld() {
+    getCurrentWorld() {
         if (!World.isLoaded()) return
 
         for (tabName of WorldState.getTablist()) {
@@ -77,7 +77,7 @@ export class WorldState {
      * - Gets the current scoreboard area
      * @returns {String}
      */
-    static getCurrentArea() {
+    getCurrentArea() {
         if (!World.isLoaded()) return
 
         for (score of WorldState.getScoreboard()) {
@@ -88,3 +88,7 @@ export class WorldState {
         }
     }
 }
+
+// Support the modules that used the older version of this class
+// that's why we export this like that and call the class that ugly name
+export const WorldState = new WorldStateClass()

@@ -353,7 +353,7 @@ export default new class TabListData {
      * @returns {String|null}
      */
     getBonusFortune() {
-        return this.currentSpray
+        return this.bonusFortune
     }
 
     /**

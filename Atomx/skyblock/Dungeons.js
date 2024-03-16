@@ -114,7 +114,9 @@ export default new class Dungeons {
             this.listeners.secrets?.forEach(fn => fn(secrets, totalSecrets, currentRoom))
         })
 
-        register("worldUnload", this._reset.bind(this))
+        register("worldUnload", () => {
+            this._reset(true)
+        })
     }
 
     /**
@@ -143,7 +145,7 @@ export default new class Dungeons {
      * - Resets all of the variables to a default state
      * - Internal Use
      */
-    _reset() {
+    _reset(isWorldReset = false) {
         // Player stuff
         this.currentFloor = null
         this.currentMilestone = null
@@ -172,7 +174,7 @@ export default new class Dungeons {
         
         // - This is a [Map] that stores all of the room data not the
         // current dungeon's map but the whole dungeons data
-        this.DungeonsMapData = new Map()
+        if (!isWorldReset) this.DungeonsMapData = new Map()
     }
 
     _makeData() {
