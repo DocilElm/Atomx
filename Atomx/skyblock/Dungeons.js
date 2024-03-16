@@ -11,6 +11,7 @@ const PuzzleEnums = {
     "✔": 1,
     "✖": 2
 }
+const Milestones = ["⓿", "❶", "❷", "❸", "❹", "❺", "❻", "❼", "❽", "❾"]
 
 /**
  * - A class that handles all sorts of utilities for dungeons
@@ -112,6 +113,8 @@ export default new class Dungeons {
 
             this.listeners.secrets?.forEach(fn => fn(secrets, totalSecrets, currentRoom))
         })
+
+        register("worldUnload", this._reset.bind(this))
     }
 
     /**
@@ -197,19 +200,53 @@ export default new class Dungeons {
     getCurrentFloor() {
         return this.currentFloor
     }
-
+    
+    /**
+     * - Gets the current milestone symbol (e.g "⓿")
+     * @returns {String}
+     */
+    getCurrentMilestone() {
+        return this.currentMilestone
+    }
+    
+    /**
+     * - Gets the current milestone in number format
+     * @returns {Number}
+     */
+    getCurrentMilestoneNum() {
+        return Milestones.indexOf(this.currentMilestone ?? "⓿")
+    }
+    
+    /**
+     * - Gets the current class
+     * - if the class was not found it will try to return the previous class
+     * @returns {String}
+     */
     getCurrentClass() {
         return this.currentClass ?? this.lastClass
     }
 
+    /**
+     * - Gets the current class level
+     * - if the class was not found it will try to return the previous class level
+     * @returns {String}
+     */
     getCurrentClassLevel() {
         return this.currentClassLevel ?? this.lastClassLevel
     }
 
+    /**
+     * - Gets the current room ID from the scoreboard
+     * @returns {String}
+     */
     getCurrentRoomID() {
         return this.currentRoomID
     }
 
+    /**
+     * - Gets the current room name from the room ID
+     * @returns {String}
+     */
     getCurrentRoomName() {
         return this.DungeonsMapData?.get(this.currentRoomID)?.name
     }

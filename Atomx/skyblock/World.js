@@ -34,7 +34,7 @@ export class WorldState {
     static inTab(string) {
         if (!World.isLoaded()) return false
 
-        return this.getTablist()?.find(name => name?.match(/^(Area|Dungeon): ([\w\d ]+)$/))?.toLowerCase()?.includes(string.toLowerCase())
+        return WorldState.getTablist()?.find(name => name?.match(/^(Area|Dungeon): ([\w\d ]+)$/))?.toLowerCase()?.includes(string.toLowerCase())
     }
 
     /**
@@ -45,7 +45,7 @@ export class WorldState {
     static inScoreboard(string) {
         if (!World.isLoaded()) return false
 
-        return this.getScoreboard()?.some(names => names?.toLowerCase()?.includes(string.toLowerCase()))
+        return WorldState.getScoreboard()?.some(names => names?.toLowerCase()?.includes(string.toLowerCase()))
     }
 
     /**
@@ -55,7 +55,7 @@ export class WorldState {
     static inDungeons() {
         if (!World.isLoaded()) return false
 
-        return this.inTab("Catacombs")
+        return WorldState.inTab("Catacombs")
     }
 
     /**
@@ -65,7 +65,7 @@ export class WorldState {
     static getCurrentWorld() {
         if (!World.isLoaded()) return
 
-        for (tabName of this.getTablist()) {
+        for (tabName of WorldState.getTablist()) {
             let worldName = tabName.match(/^(Area|Dungeon): ([\w\d ]+)$/)?.[2]
 
             if (!worldName) continue
@@ -80,7 +80,7 @@ export class WorldState {
     static getCurrentArea() {
         if (!World.isLoaded()) return
 
-        for (score of this.getScoreboard()) {
+        for (score of WorldState.getScoreboard()) {
             let areaName = score.match(/^  (.+)$/)?.[1]
 
             if (!areaName) continue

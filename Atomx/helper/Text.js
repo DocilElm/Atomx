@@ -25,6 +25,8 @@ export class TextHelper {
     * @returns returns the callback fn with the given matches or the current msg if the criteria is null
     */
     static matchesCriteria(fn, criteria, unformatted, event, formatted) {
+        if (!fn || !unformatted || !event || !formatted) return
+
         if (!criteria) return fn(unformatted, event, formatted)
 
         else if (typeof(criteria) === "string") {
