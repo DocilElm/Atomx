@@ -58,6 +58,7 @@ export default new class TabListData {
         this.pestsAlive = TextHelper.getRegexMatch(this.pestsAliveRegex, tabName)?.[1] ?? this.pestsAlive
         this.currentSpray = TextHelper.getRegexMatch(this.currentSprayRegex, tabName)?.[1] ?? this.currentSpray
         this.bonusFortune = TextHelper.getRegexMatch(this.bonusFortuneRegex, tabName)?.[1] ?? this.bonusFortune
+        this.infesetedPlots = TextHelper.getRegexMatch(this.infestedPlotsRegex, tabName)?.[1] ?? this.infesetedPlots
 
         // Crimson
         this.matriarchDaily = TextHelper.getRegexMatch(this.matriarchRegex, tabName)?.[1] ?? this.matriarchDaily
@@ -139,6 +140,7 @@ export default new class TabListData {
         this.pestsAliveRegex = GardenRegex.PestsAlive
         this.currentSprayRegex = GardenRegex.CurrentSpray
         this.bonusFortuneRegex = GardenRegex.BonusFortune
+        this.infestedPlotsRegex = GardenRegex.InfesetedPlots
 
         // Crimson Regex
         this.matriarchRegex = CrimsonRegex.Matriarch
@@ -193,6 +195,7 @@ export default new class TabListData {
         this.pestsAlive = 0
         this.currentSpray = null
         this.bonusFortune = null
+        this.infesetedPlots = null
 
         // Crimson
         this.matriarchDaily = null
@@ -351,6 +354,14 @@ export default new class TabListData {
      */
     getBonusFortune() {
         return this.currentSpray
+    }
+
+    /**
+     * - Gets the currently infested plots
+     * @returns {String} (e.g "10, 5, 15")
+     */
+    getInfestedPlots() {
+        return this.infesetedPlots
     }
 
     // Crimson
