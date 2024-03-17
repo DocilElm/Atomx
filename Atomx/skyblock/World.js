@@ -3,6 +3,14 @@
  * @class
  */
 class WorldStateClass {
+
+    constructor() {
+        this.tablist = []
+        this.scoreboard = []
+        this.lastTablist = null
+        this.lastScoreboard = null
+    }
+
     /**
      * - Gets the Tablist's names and removes the formatting of them
      * @returns {Array}
@@ -11,7 +19,12 @@ class WorldStateClass {
         // Return an empty array if the world isn't loaded
         if (!World.isLoaded()) return []
 
-        return TabList?.getNames()?.map(name => name?.removeFormatting())
+        if (this.lastTablist && (Date.now() - this.lastTablist) <= 500) return this.tablist
+
+        this.tablist = TabList?.getNames()?.map(name => name?.removeFormatting())
+        this.lastTablist = Date.now()
+
+        return this.tablist
     }
 
     /**
@@ -22,8 +35,13 @@ class WorldStateClass {
     getScoreboard(descending = false) {
         // Return an empty array if the world isn't loaded
         if (!World.isLoaded()) return []
-        
-        return Scoreboard.getLines(descending)?.map(line => line?.getName()?.removeFormatting()?.replace(/[^\u0000-\u007F]/g, ""))
+
+        if (this.lastScoreboard && (Date.now() - this.lastScoreboard) <= 500) return this.scoreboard
+
+        this.scoreboard = Scoreboard.getLines(descending)?.map(line => line?.getName()?.removeFormatting()?.replace(/[^\u0000-\u007F]/g, ""))
+        this.lastScoreboard = Date.now()
+
+        return this.scoreboard
     }
 
     /**
@@ -33,8 +51,8 @@ class WorldStateClass {
      */
     inTab(string) {
         if (!World.isLoaded()) return false
-
-        return WorldState.getTablist()?.find(name => name?.match(/^(Area|Dungeon): ([\w\d ]+)$/))?.toLowerCase()?.includes(string.toLowerCase())
+        
+        return this.getTablist()?.find(name => name?.match(/^(Area|Dungeon): ([\w\d ]+)$/))?.toLowerCase()?.includes(string.toLowerCase())
     }
 
     /**
@@ -45,7 +63,7 @@ class WorldStateClass {
     inScoreboard(string) {
         if (!World.isLoaded()) return false
 
-        return WorldState.getScoreboard()?.some(names => names?.toLowerCase()?.includes(string.toLowerCase()))
+        return this.getScoreboard()?.some(names => names?.toLowerCase()?.includes(string.toLowerCase()))
     }
 
     /**
@@ -55,7 +73,7 @@ class WorldStateClass {
     inDungeons() {
         if (!World.isLoaded()) return false
 
-        return WorldState.inTab("Catacombs")
+        return this.inTab("Catacombs")
     }
 
     /**
@@ -65,7 +83,7 @@ class WorldStateClass {
     getCurrentWorld() {
         if (!World.isLoaded()) return
 
-        for (tabName of WorldState.getTablist()) {
+        for (tabName of this.getTablist()) {
             let worldName = tabName.match(/^(Area|Dungeon): ([\w\d ]+)$/)?.[2]
 
             if (!worldName) continue
@@ -80,7 +98,7 @@ class WorldStateClass {
     getCurrentArea() {
         if (!World.isLoaded()) return
 
-        for (score of WorldState.getScoreboard()) {
+        for (score of this.getScoreboard()) {
             let areaName = score.match(/^  (.+)$/)?.[1]
 
             if (!areaName) continue
