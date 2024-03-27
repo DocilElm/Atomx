@@ -1,6 +1,6 @@
 {
-    "apiVersion": "1.14.2",
-    "changelog": ["Fix Current Pet regex breaking on pet with skin"],
+    "apiVersion": "1.15.2",
+    "changelog": ["Fix Current Pet regex part 2"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
         "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
@@ -356,7 +356,7 @@
                 "flags": ""
             },
             "CurrentPet": {
-                "pattern": "^ \\[Lvl (\\d+)\\] ([A-z ]+) ?✦?$",
+                "pattern": "^ \\[Lvl (\\d+)\\] (?:\\[\\d+✦\\])?([A-z ]+) ?✦?$",
                 "flags": ""
             },
             "CurrentPetXp": {
