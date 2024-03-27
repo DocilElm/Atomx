@@ -1,6 +1,6 @@
 {
-    "apiVersion": "1.12.2",
-    "changelog": ["Fix next visitor regex", "Remove old trophy fish colors api", "Add infested plots regex"],
+    "apiVersion": "1.13.2",
+    "changelog": ["Fix Infested Plots Regex"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
         "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
@@ -203,7 +203,7 @@
                 "flags": ""
             },
             "InfesetedPlots": {
-                "pattern": "^ Infested Plots\\: ([\\d, ]+)$",
+                "pattern": "^ Plots\\: ([\\d, ]+)$",
                 "flags": ""
             }
         },
