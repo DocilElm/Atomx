@@ -1,6 +1,6 @@
 {
-    "apiVersion": "1.15.2",
-    "changelog": ["Fix Current Pet regex part 2"],
+    "apiVersion": "1.16.2",
+    "changelog": ["Fix Team Deaths Regex", "Fix Current Milestone Regex"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
         "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
@@ -107,7 +107,7 @@
                 "flags": ""
             },
             "Milestone": {
-                "pattern": "^ Your Milestone: ☠(.+)$",
+                "pattern": "^ Your Milestone: [☠|☄](.+)$",
                 "flags": ""
             },
             "CompletedRooms": {
@@ -115,7 +115,7 @@
                 "flags": ""
             },
             "TeamDeaths": {
-                "pattern": "^ Team Deaths: ([\\d]+)$",
+                "pattern": "^Team Deaths: ([\\d]+)$",
                 "flags": ""
             },
             "PuzzlesAmount": {
