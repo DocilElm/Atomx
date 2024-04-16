@@ -32,7 +32,7 @@ export default class ItemHandler {
         const regexData = AtomxApi.getRegexData().ItemHandler
         if (!regexData) return
 
-        this.this.essenceRegex = regexData.Essence
+        this.essenceRegex = regexData.Essence
     }
 
     /**
