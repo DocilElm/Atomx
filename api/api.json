@@ -1,6 +1,6 @@
 {
-    "apiVersion": "1.16.2",
-    "changelog": ["Fix Team Deaths Regex", "Fix Current Milestone Regex"],
+    "apiVersion": "1.17.2",
+    "changelog": ["Fix Dungeons Team Members Regex"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
         "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
@@ -99,7 +99,7 @@
                 "flags": ""
             },
             "PlayerInformation": {
-                "pattern": "^\\[[\\d]+\\] ([A-z]+)(?:.+?)? \\(([\\w]+) ([IVXLCDM]+)\\)$",
+                "pattern": "^\\[[\\d]+\\] (\\w+)(?:.+?)? \\(([\\w]+) ([IVXLCDM]+)\\)$",
                 "flags": ""
             },
             "SecretsFound": {
