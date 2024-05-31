@@ -1,6 +1,6 @@
 {
-    "apiVersion": "1.17.2",
-    "changelog": ["Fix Dungeons Team Members Regex"],
+    "apiVersion": "1.18.2",
+    "changelog": ["Fix Milestone Regex"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
         "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
@@ -107,7 +107,7 @@
                 "flags": ""
             },
             "Milestone": {
-                "pattern": "^ Your Milestone: [☠|☄](.+)$",
+                "pattern": "^ Your Milestone: .(.)$",
                 "flags": ""
             },
             "CompletedRooms": {
