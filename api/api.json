@@ -1,6 +1,6 @@
 {
-    "apiVersion": "1.18.2",
-    "changelog": ["Fix Milestone Regex"],
+    "apiVersion": "1.19.2",
+    "changelog": ["Fix Dedication 4 Book Entry"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
         "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
@@ -49,7 +49,9 @@
         "Overgrown Grass": "OVERGROWN_GRASS",
         "Green Bandana": "GREEN_BANDANA",
         "Dedication IV": "ENCHANTMENT_DEDICATION_4",
+        "Dedication IV Book": "ENCHANTMENT_DEDICATION_4",
         "Dedication 4": "ENCHANTMENT_DEDICATION_4",
+        "Dedication 4 Book": "ENCHANTMENT_DEDICATION_4",
         "Music Rune 1": "MUSIC_RUNE;1",
         "Music Rune I": "MUSIC_RUNE;1",
         "Space Helmet": "DCTR_SPACE_HELM",
