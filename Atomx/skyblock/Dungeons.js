@@ -169,7 +169,7 @@ export default new class Dungeons {
 
         // Loading dungeons data
         this.DataFile = Persistence.getDataFromFile("Atomx", "DungeonsData.json")
-        this.DungeonsData = this.DataFile?.DungeonsData ?? Persistence.getDataFromURL("https://soopy.dev/api/bettermap/roomdata")
+        this.DungeonsData = this.DataFile?.DungeonsData ?? Persistence.getDataFromURL("https://raw.githubusercontent.com/DocilElm/Atomx/main/api/roomdata.json")
         this.savedDate = this.DataFile?.lastSave
         
         // - This is a [Map] that stores all of the room data not the
@@ -191,7 +191,7 @@ export default new class Dungeons {
     }
 
     _saveData() {
-        if (this.savedDate && (DateHelper.getMsSinceNow(this.savedDate) >= 86400000)) this.DungeonsData = Persistence.getDataFromURL("https://soopy.dev/api/bettermap/roomdata")
+        if (this.savedDate && (DateHelper.getMsSinceNow(this.savedDate) >= 86400000)) this.DungeonsData = Persistence.getDataFromURL("https://raw.githubusercontent.com/DocilElm/Atomx/main/api/roomdata.json")
 
         Persistence.saveDataToFile("Atomx", "DungeonsData.json", {
             DungeonsData: this.DungeonsData,
