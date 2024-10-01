@@ -1,6 +1,6 @@
 {
-    "apiVersion": "1.19.2",
-    "changelog": ["Fix Dedication 4 Book Entry"],
+    "apiVersion": "1.20.2",
+    "changelog": ["Fix Replenish Book Entry"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
         "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
@@ -58,7 +58,9 @@
         "Cultivating I": "ENCHANTMENT_CULTIVATING_1",
         "Cultivating 1": "ENCHANTMENT_CULTIVATING_1",
         "Replenish I": "ENCHANTMENT_REPLENISH_1",
+        "Replenish I Book": "ENCHANTMENT_REPLENISH_1",
         "Replenish 1": "ENCHANTMENT_REPLENISH_1",
+        "Replenish 1 Book": "ENCHANTMENT_REPLENISH_1",
         "Jungle Key": "JUNGLE_KEY"
     },
     "TrophyFishColors": {
