@@ -1,6 +1,6 @@
 {
-    "apiVersion": "1.21.2",
-    "changelog": ["Add new visitors to the list"],
+    "apiVersion": "1.21.3",
+    "changelog": ["Add wheat to garden visitor api"],
     "BossEntryMessage": [
         "[BOSS] Bonzo: Gratz for making it this far, but I'm basically unbeatable.",
         "[BOSS] Scarf: This is where the journey ends for you, Adventurers.",
@@ -42,7 +42,8 @@
         "ENCHANTED_RAW_RABBIT": "ENCHANTED_RABBIT",
         "CROPIE": "CROPIE",
         "SQUASH": "SQUASH",
-        "FERMENTO": "FERMENTO"
+        "FERMENTO": "FERMENTO",
+        "ENCHANTED_WHEAT": "ENCHANTED_WHEAT"
     },
     "GardenRareItems": {
         "Flowering Bouquet": "FLOWERING_BOUQUET",
